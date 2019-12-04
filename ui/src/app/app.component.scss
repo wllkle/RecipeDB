@@ -1,0 +1,60 @@
+$breakpoint-xs: 400px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+
+.app {
+    display: flex;
+    flex-direction: column;
+
+    .navbar {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
+        .navbar-brand {
+            background-color: #5248d7;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.25rem;
+
+            svg {
+                width: 1.15rem;
+                height: 1.15rem;
+                fill: #fff;
+            }
+        }
+
+        .navbar-nav {
+            margin-top: 1rem;
+            
+            @media screen and (min-width: $breakpoint-md) {
+                margin-top: unset;
+            }
+        }
+    }
+
+    .wrap {
+        width: 100%;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        transition: padding 500ms;
+
+        @media screen {
+            @media (min-width: $breakpoint-sm) {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+            @media (min-width: $breakpoint-md) {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+            @media (min-width: $breakpoint-lg) {
+                padding-left: 8rem;
+                padding-right: 8rem;
+            }
+        }
+    }
+}
