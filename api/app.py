@@ -120,13 +120,13 @@ def get_recipes():
         'desc': 1,
         'rating': 1,
         'calories': 1
-    }).limit(20):
+    }).limit(15):
         recipe['_id'] = str(recipe['_id'])
         recipe_list.append(recipe)
     return response(200, recipe_list)
 
 
-@app.route('/recipes/<string:id>', methods=['GET'])
+@app.route('/recipe/<string:id>', methods=['GET'])
 def get_recipe(id):
     recipe = recipes.find_one({'_id': ObjectId(id)})
 
@@ -138,4 +138,4 @@ def get_recipe(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=1997)
+    app.run(debug=True)

@@ -1,7 +1,4 @@
-$breakpoint-xs: 400px;
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
+@import '../app';
 
 .app {
     display: flex;
@@ -27,9 +24,24 @@ $breakpoint-lg: 992px;
             }
         }
 
+        .navbar-toggler {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            @media screen and (min-width: $breakpoint-md) {
+                display: none;
+            }
+
+            svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+        }
+
         .navbar-nav {
             margin-top: 1rem;
-            
+
             @media screen and (min-width: $breakpoint-md) {
                 margin-top: unset;
             }
