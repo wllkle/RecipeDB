@@ -1,4 +1,45 @@
+// widths
 $breakpoint-xs: 400px;
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
+
+// colors
+$brand: #5248d7;
+
+$t-fast: 250ms;
+$t-reg: 500ms;
+
+.wrap {
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    transition: padding $t-reg;
+
+    @media screen {
+        @media (min-width: $breakpoint-sm) {
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+        @media (min-width: $breakpoint-md) {
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+        @media (min-width: $breakpoint-lg) {
+            padding-left: 8rem;
+            padding-right: 8rem;
+        }
+    }
+}
+
+.vertical-wrap {
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    transition: padding $t-reg;
+
+    @media screen and (min-width: $breakpoint-md) {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}

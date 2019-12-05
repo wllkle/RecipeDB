@@ -15,12 +15,10 @@ export class RecipesComponent implements OnInit {
 
     ngOnInit() {
         this.webService.getRecipes().then((response) => {
-            console.log('res', response);
             // @ts-ignore
             this.recipeList = response;
         }).catch((err) => {
             console.log('err', err);
         });
     }
-
 }
