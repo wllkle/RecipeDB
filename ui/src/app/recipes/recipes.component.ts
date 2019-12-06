@@ -11,14 +11,7 @@ export class RecipesComponent implements OnInit {
     constructor(private webService: WebService) {
     }
 
-    recipeList = [];
-
     ngOnInit() {
-        this.webService.getRecipes().then((response) => {
-            // @ts-ignore
-            this.recipeList = response;
-        }).catch((err) => {
-            console.log('err', err);
-        });
+        this.webService.getRecipes();
     }
 }

@@ -21,13 +21,14 @@ export class RecipeComponent implements OnInit {
         };
 
         if (id) {
-            this.webService.getRecipe(id).then((response) => {
-                console.log('recipe', response);
-                this.recipe = response;
-            }).catch((err) => {
-                console.log('recipe error', err);
-                goBack();
-            });
+            this.webService.getRecipe(id);
+            //     .then((response) => {
+            //     console.log('recipe', response);
+            //     this.recipe = response;
+            // }).catch((err) => {
+            //     console.log('recipe error', err);
+            //     goBack();
+            // });
         } else {
             goBack();
         }
