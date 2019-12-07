@@ -9,31 +9,26 @@ export class WebService {
 
     API_URL = 'http://localhost:5000';
 
-    private __recipeList = [];
-    private _recipeList = new Subject();
-    public recipeList = this._recipeList.asObservable();
+    private recipeListArr;
+    private recipeListSub = new Subject();
+    public recipeList = this.recipeListSub.asObservable();
 
-    private __recipeData = {};
-    private _recipeData = new Subject();
-    public recipeData = this._recipeData.asObservable();
-
-    getRecipes() {
-        return this.http.get(`${this.API_URL}/recipes`).subscribe(response => {
-            this.__recipeList = response;
-            this._recipeList.next(this.__recipeList);
+    getRecipes(page: number) {
+        return this.http.get(`${this.API_URL}/recipes${page > 1 ? `?p=${page}` : ''}`).subscribe(response => {
+            this.recipeListArr = response;
+            this.recipeListSub.next(this.recipeListArr);
         });
     }
 
+
+    private recipeDataObj;
+    private recipeDataSub = new Subject();
+    public recipeData = this.recipeDataSub.asObservable();
+
     getRecipe(id: string) {
-        if (this._recipeData[id]) {
-            return this.__recipeData[id];
-        }
         return this.http.get(`${this.API_URL}/recipe/${id}`).subscribe(response => {
-            this.__recipeData = {
-                ...this.__recipeData,
-                [id]: response
-            };
-            this._recipeData.next(this.__recipeData);
+            this.recipeDataObj = [response];
+            this.recipeDataSub.next(this.recipeDataObj);
         });
     }
 }

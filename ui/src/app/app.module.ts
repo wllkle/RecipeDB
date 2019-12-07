@@ -13,6 +13,7 @@ import {RecipeComponent} from './recipe/recipe.component';
 const routes = [
     {path: '', component: HomeComponent},
     {path: 'recipes', component: RecipesComponent},
+    {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipe/:id', component: RecipeComponent}
 ];
 
