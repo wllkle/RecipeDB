@@ -9,10 +9,14 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {RecipesComponent} from './recipes/recipes.component';
 import {RecipeComponent} from './recipe/recipe.component';
+import {LoginComponent} from './login/login.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 const routes = [
     {path: '', component: HomeComponent},
+    {path: 'login', component: LoginComponent},
     {path: 'recipes', component: RecipesComponent},
+    {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipe/:id', component: RecipeComponent}
 ];
 
@@ -21,12 +25,14 @@ const routes = [
         AppComponent,
         HomeComponent,
         RecipesComponent,
-        RecipeComponent
+        RecipeComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        ReactiveFormsModule
     ],
     providers: [WebService],
     bootstrap: [AppComponent]

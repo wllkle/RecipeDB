@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WebService} from '../web.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-recipes',
@@ -8,17 +9,15 @@ import {WebService} from '../web.service';
 })
 export class RecipesComponent implements OnInit {
 
-    constructor(private webService: WebService) {
+    constructor(private webService: WebService, private route: ActivatedRoute) {
     }
 
-    recipeList = [];
-
     ngOnInit() {
-        this.webService.getRecipes().then((response) => {
-            // @ts-ignore
-            this.recipeList = response;
-        }).catch((err) => {
-            console.log('err', err);
-        });
+        let pageNum = 1;
+        const {page} = this.route.snapshot.params;
+        if (page) {
+            pageNum = +page;
+        }
+        this.webService.getRecipes(pageNum);
     }
 }

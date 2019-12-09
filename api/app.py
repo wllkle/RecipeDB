@@ -5,7 +5,7 @@ from bson import ObjectId
 from functools import wraps
 from bcrypt import checkpw
 from datetime import datetime, timedelta
-from config import SECRET_KEY
+from config import SECRET_KEY, ITEMS_PER_PAGE
 from jwt import encode, decode
 
 app = Flask('AccidentDB')
@@ -114,13 +114,15 @@ def logout():
 
 @app.route('/recipes', methods=['GET'])
 def get_recipes():
+    page_num = 1
+    if request.args.get('p'):
+        page_num = int(request.args.get('p'))
+
+    start = ITEMS_PER_PAGE * (page_num - 1)
+
     recipe_list = []
-    for recipe in recipes.find({}, {
-        'title': 1,
-        'desc': 1,
-        'rating': 1,
-        'calories': 1
-    }).limit(15):
+    results = recipes.find({}, {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).skip(start).limit(ITEMS_PER_PAGE)
+    for recipe in results:
         recipe['_id'] = str(recipe['_id'])
         recipe_list.append(recipe)
     return response(200, recipe_list)

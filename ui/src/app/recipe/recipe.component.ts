@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {WebService} from '../web.service';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-recipe',
@@ -9,27 +9,11 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class RecipeComponent implements OnInit {
 
-    constructor(private webService: WebService, private route: ActivatedRoute) {
+    constructor(private webService: WebService, private router: Router, private route: ActivatedRoute) {
     }
-
-    recipe = {};
 
     ngOnInit() {
         const {id} = this.route.snapshot.params;
-        const goBack = () => {
-            window.history.back();
-        };
-
-        if (id) {
-            this.webService.getRecipe(id).then((response) => {
-                console.log('recipe', response);
-                this.recipe = response;
-            }).catch((err) => {
-                console.log('recipe error', err);
-                goBack();
-            });
-        } else {
-            goBack();
-        }
+        this.webService.getRecipe(id);
     }
 }
