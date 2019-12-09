@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class RecipesComponent implements OnInit {
 
-    constructor(private webService: WebService, private route?: ActivatedRoute) {
+    constructor(private webService: WebService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {

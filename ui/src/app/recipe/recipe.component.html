@@ -1,11 +1,11 @@
-<div class="wrap vertical-wrap" *ngIf="webService.recipeData[0]">
-    <h1>{{webService.recipeData[0].title}}</h1>
+<div class="wrap vertical-wrap" *ngFor="let data of webService.recipeData | async">
+    <h1>{{data.title}}</h1>
     <p class="text-muted">{{data.desc}}</p>
     <div class="row">
         <div class="col">
             <h4>Ingredients</h4>
             <ul>
-                <li *ngFor="let ingredient of webService.recipeData[0].ingredients">
+                <li *ngFor="let ingredient of data.ingredients">
                     {{ingredient}}
                 </li>
             </ul>
@@ -13,7 +13,7 @@
         <div class="col">
             <h4>Directions</h4>
             <ol>
-                <li *ngFor="let ingredient of webService.recipeData[0].directions">
+                <li *ngFor="let ingredient of data.directions">
                     {{ingredient}}
                 </li>
             </ol>
@@ -21,11 +21,11 @@
     </div>
     <div class="row">
         <div class="col">
-            <div>Rating: {{webService.recipeData[0].rating}} / 5</div>
-            <div>Calories: {{webService.recipeData[0].calories}}</div>
-            <div>Fat: {{webService.recipeData[0].fat}}</div>
-            <div>Sodium: {{webService.recipeData[0].sodium}}</div>
-            <div>Protein: {{webService.recipeData[0].protein}}</div>
+            <div>Rating: {{data.rating}} / 5</div>
+            <div>Calories: {{data.calories}}</div>
+            <div>Fat: {{data.fat}}</div>
+            <div>Sodium: {{data.sodium}}</div>
+            <div>Protein: {{data.protein}}</div>
         </div>
     </div>
 </div>
