@@ -5,14 +5,14 @@ from bson import ObjectId
 from functools import wraps
 from bcrypt import checkpw
 from datetime import datetime, timedelta
-from config import SECRET_KEY, ITEMS_PER_PAGE
+from config import SECRET_KEY, ITEMS_PER_PAGE, MONGO
 from jwt import encode, decode
 
-app = Flask('AccidentDB')
+app = Flask('RecipeDB')
 app.config['SECRET_KEY'] = SECRET_KEY
 CORS(app)
 
-client = MongoClient('mongodb://127.0.0.1:27017')
+client = MongoClient(MONGO)
 db = client.RecipeDB
 users = db.users
 blacklist = db.blacklist
@@ -130,13 +130,23 @@ def get_recipes():
 
 @app.route('/recipe/<string:id>', methods=['GET'])
 def get_recipe(id):
-    recipe = recipes.find_one({'_id': ObjectId(id)})
+    recipe = recipes.find_one({'_id': ObjectId(id)}, {'comments': 0})
 
     if recipe is not None:
         recipe['_id'] = str(recipe['_id'])
         return response(200, recipe)
     else:
         return response(404, 'No recipe found')
+
+
+@app.route('/recipe/<string:id>/comments', methods=['GET'])
+def get_recipe_comments(id):
+    result = recipes.find_one({'_id': ObjectId(id)}, {'comments': 1, '_id': 0})
+    return_data = []
+    for comment in result['comments']:
+        comment['_id'] = str(comment['_id'])
+        return_data.append(comment)
+    return response(200, return_data)
 
 
 if __name__ == '__main__':
