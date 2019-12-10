@@ -15,5 +15,6 @@ export class RecipeComponent implements OnInit {
     ngOnInit() {
         const {id} = this.route.snapshot.params;
         this.webService.getRecipe(id);
+        this.webService.getRecipeComments(id);
     }
 }

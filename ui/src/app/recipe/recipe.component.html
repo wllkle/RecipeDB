@@ -21,11 +21,22 @@
     </div>
     <div class="row">
         <div class="col">
+            <h4>Nutrition Info</h4>
             <div>Rating: {{data.rating}} / 5</div>
             <div>Calories: {{data.calories}}</div>
             <div>Fat: {{data.fat}}</div>
             <div>Sodium: {{data.sodium}}</div>
             <div>Protein: {{data.protein}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4>Comments</h4>
+            <div class="media" *ngFor="let comment of webService.recipeComments|async">
+                <div class="media-body">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
