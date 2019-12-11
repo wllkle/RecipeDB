@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
-import {WebService} from '../web.service';
+import {WebService} from '../../web.service';
+import {AuthService} from '../../auth.service';
 
 @Component({
     selector: 'app-login',
@@ -10,7 +11,7 @@ import {WebService} from '../web.service';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private webService: WebService, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+    constructor(private webService: WebService, private authService: AuthService, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     }
 
     loginForm;
@@ -23,6 +24,6 @@ export class LoginComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.loginForm.value);
+        this.authService.login('rob', 'rob');
     }
 }

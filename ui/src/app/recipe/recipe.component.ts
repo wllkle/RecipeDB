@@ -12,6 +12,8 @@ export class RecipeComponent implements OnInit {
     constructor(private webService: WebService, private router: Router, private route: ActivatedRoute) {
     }
 
+    navbarCollapsed = true;
+
     ngOnInit() {
         const {id} = this.route.snapshot.params;
         this.webService.getRecipe(id);

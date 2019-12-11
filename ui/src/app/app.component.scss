@@ -3,53 +3,12 @@
 .app {
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 
-    .navbar {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-
-        .navbar-brand {
-            background-color: $brand;
-            width: 2.5rem;
-            height: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.25rem;
-            transition: background-color $t-fast;
-
-            svg {
-                width: 1.15rem;
-                height: 1.15rem;
-                fill: #fff;
-            }
-
-            &:hover {
-                background-color: darken($brand, 10%);
-            }
-        }
-
-        .navbar-toggler {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            @media screen and (min-width: $breakpoint-md) {
-                display: none;
-            }
-
-            svg {
-                width: 1.25rem;
-                height: 1.25rem;
-            }
-        }
-
-        .navbar-nav {
-            margin-top: 1rem;
-
-            @media screen and (min-width: $breakpoint-md) {
-                margin-top: unset;
-            }
-        }
+    .app-body {
+        flex: 1;
+        height: 100%;
+        overflow-y: auto;
     }
 }
