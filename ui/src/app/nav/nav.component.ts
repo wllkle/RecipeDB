@@ -12,12 +12,16 @@ export class NavComponent implements OnInit {
     }
 
     navbarCollapsed = true;
-    user = null;
+    user;
 
     ngOnInit() {
         this.authService.user.subscribe(user => {
             this.user = user;
         });
+    }
+
+    logout() {
+        this.authService.logout();
     }
 
 }
