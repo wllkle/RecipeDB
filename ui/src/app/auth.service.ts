@@ -1,70 +1,96 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {API_URL} from '../config';
 
 @Injectable()
 export class AuthService {
     constructor(private http: HttpClient) {
-        this._user = new Subject();
+        this._user = new BehaviorSubject(getDefaultUserObject());
         this.user = this._user.asObservable();
-        // this.getStoredUser();
+        this.getStoredUser();
     }
 
     private _user;
     public user;
+
+    setState(value) {
+        this._user.next(value);
+    }
+
+    register(name: string, username: string, email: string, password: string) {
+        let data = new FormData();
+        data.append('name', name);
+        data.append('email', email);
+        data.append('username', username);
+        data.append('password', password);
+
+        return this.http.post(`${API_URL}/register`, data).toPromise().then(response => {
+            this.login(username, password);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
 
     login(username: string, password: string) {
         let data = new FormData();
         data.append('username', username);
         data.append('password', password);
 
-        return this.http.post(`${API_URL}/login`, data).subscribe(response => {
-            console.log('response', response);
+        this.http.post(`${API_URL}/login`, data).toPromise().then(response => {
             localStorage.setItem('user', JSON.stringify(response));
-            this._user.next(response);
+            this.setState(response);
+        }).catch(error => {
+            console.log(error);
         });
     }
 
     logout() {
-        if (this.user['token']) {
+        const token = this._user.getValue().token;
+        if (token && token.length > 0) {
             const httpOptions = {
                 headers: new HttpHeaders({
-                    'x-access-token': this.user['token']
+                    'x-access-token': token
                 })
             };
-            this.http.post(`${API_URL}/logout`, null, httpOptions).subscribe(response => {
-                console.log(response);
+            this.http.post(`${API_URL}/logout`, null, httpOptions).toPromise().then(response => {
+                this._user.next({
+                    name: null,
+                    username: null,
+                    token: null,
+                    exp: null
+                });
+                localStorage.removeItem('user');
+            }).catch(error => {
+                console.log(error);
             });
         }
     }
 
     getStoredUser() {
-        const setNull = () => {
-            console.log('setting null user');
-            this._user.next({
-                name: null,
-                username: null,
-                token: null,
-                exp: null
-            });
-        };
-
         try {
-            let user = localStorage.getItem('user');
-            console.log('user', user);
+            const user = localStorage.getItem('user');
             if (user && user.length > 0) {
-                user = JSON.parse(user);
-                console.log('user', user);
-                const exp = new Date(user['exp']);
-                if (exp > new Date()) {
-                    this._user.next(user);
+                const userObj = JSON.parse(user);
+                console.log('exp', userObj.exp);
+                if (new Date(userObj.exp) > new Date()) {
+                    this._user.next(userObj);
                 } else {
-                    setNull();
+                    this._user.next(getDefaultUserObject());
                 }
             }
         } catch (e) {
-            setNull();
+            console.log(e);
+            this._user.next(getDefaultUserObject());
         }
     }
 }
+
+const getDefaultUserObject = () => {
+    return {
+        name: null,
+        username: null,
+        token: null,
+        exp: null
+    };
+};

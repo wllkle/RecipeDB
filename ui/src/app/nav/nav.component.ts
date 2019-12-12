@@ -12,6 +12,7 @@ export class NavComponent implements OnInit {
     }
 
     navbarCollapsed = true;
+    dropdownCollapsed = true;
     user;
 
     ngOnInit() {
@@ -22,6 +23,6 @@ export class NavComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+        this.dropdownCollapsed = true;
     }
-
 }

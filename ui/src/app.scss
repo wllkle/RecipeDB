@@ -6,10 +6,13 @@ $breakpoint-lg: 992px;
 
 // colors
 $brand: #5248d7;
+$white: #ffffff;
+$border: #cccccc;
 
 $t-fast: 250ms;
 $t-reg: 500ms;
 
+// wrap
 .wrap {
     width: 100%;
     padding-left: 2rem;

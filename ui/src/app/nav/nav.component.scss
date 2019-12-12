@@ -3,6 +3,7 @@
 .navbar {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    user-select: none;
 
     .navbar-brand {
         background-color: $brand;
@@ -42,6 +43,10 @@
 
     .navbar-nav {
         margin-top: 1rem;
+
+        .nav-item {
+            cursor: pointer;
+        }
 
         @media screen and (min-width: $breakpoint-md) {
             margin-top: unset;
