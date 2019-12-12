@@ -65,29 +65,34 @@ def register():
     def is_null(value):
         return len(value) == 0
 
-    if is_null(request.form['name']):
+    name = request.form['name']
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+
+    if is_null(name):
         return response(400, 'Name cannot be null')
 
-    if is_null(request.form['username']):
+    if is_null(username):
         return response(400, 'Username cannot be null')
 
-    if is_null(request.form['email']):
+    if is_null(email):
         return response(400, 'Email cannot be null')
 
-    if is_null(request.form['password']):
+    if is_null(password):
         return response(400, 'Password cannot be null')
 
-    user_list = users.find({'username': request.form['username']})
+    user_list = users.find({'username': username})
 
     for u in user_list:
-        if u['username'] == request.form['username']:
+        if u['username'] == username:
             return response(400, 'A user already exists with the username you provided.')
 
     user = {
-        'name': request.form['name'],
-        'email': request.form['email'],
-        'username': request.form['username'],
-        'password': hashpw(str(request.form['password']).encode('UTF-8'), gensalt()),
+        'name': name,
+        'email': email,
+        'username': username,
+        'password': hashpw(str(password).encode('UTF-8'), gensalt()),
         'admin': False
     }
     users.insert_one(user)
