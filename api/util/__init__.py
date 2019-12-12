@@ -10,3 +10,7 @@ def response(status_code, data):
             data = {'message': data}
 
     return make_response(jsonify(data), status_code)
+
+
+def trim(value, length):
+    return (value[:length + 2] + '..') if len(value) > length else value

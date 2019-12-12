@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="wrap vertical-wrap top-recipes">
-    <h1>Top Recipes of the Week</h1>
+    <h1>This Week's Top Recipes</h1>
     <div class="recipe-container">
         <div *ngFor="let recipe of webService.topRecipes | async" class="recipe">
             <div class="card" [routerLink]="['/recipe', recipe._id]">

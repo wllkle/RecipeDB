@@ -5,7 +5,7 @@ from bson import ObjectId
 from datetime import datetime
 from random import shuffle
 
-from util import response
+from util import response, trim
 
 client = MongoClient(MONGO)
 db = client.RecipeDB
@@ -34,6 +34,7 @@ def get_recipes():
     results = recipes.find({}, {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).skip(start).limit(ITEMS_PER_PAGE)
     for recipe in results:
         recipe['_id'] = str(recipe['_id'])
+        recipe['desc'] = trim(recipe['desc'], 160)
         recipe_list.append(recipe)
     return response(200, recipe_list)
 
@@ -76,8 +77,9 @@ def delete_recipe_comment(_id, _cid, user_id):
 def get_top_recipes():
     results = recipes.find({'rating': 5}, {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).limit(100)
     recipe_list = []
-    for r in results:
-        r['_id'] = str(r['_id'])
-        recipe_list.append(r)
+    for recipe in results:
+        recipe['_id'] = str(recipe['_id'])
+        recipe['desc'] = trim(recipe['desc'], 160)
+        recipe_list.append(recipe)
     shuffle(recipe_list)
     return response(200, recipe_list[:6])
