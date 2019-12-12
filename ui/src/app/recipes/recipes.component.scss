@@ -17,7 +17,7 @@
             @media (min-width: $breakpoint-md) {
                 width: 50%;
             }
-            @media (min-width: $breakpoint-lg) {
+            @media (min-width: $breakpoint-xl) {
                 width: calc(100% / 3);
             }
         }
