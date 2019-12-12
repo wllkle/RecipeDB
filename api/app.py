@@ -102,7 +102,7 @@ def recipe_comments(_id):
 @jwt_required
 def new_comment(_id):
     global _user
-    return new_recipe_comment(_id, _user['_id'])
+    return new_recipe_comment(_id, _user)
 
 
 @app.route('/recipe/<string:_id>/comments/<string:_cid>', methods=['DELETE'])

@@ -1,11 +1,11 @@
-<div class="wrap vertical-wrap" *ngFor="let data of webService.recipeData | async">
-    <h1>{{data.title}}</h1>
-    <p class="text-muted">{{data.desc}}</p>
+<div class="wrap vertical-wrap" *ngIf="recipe !== {}">
+    <h1>{{recipe.title}}</h1>
+    <p class="text-muted">{{recipe.desc}}</p>
     <div class="row">
         <div class="col">
             <h4>Ingredients</h4>
             <ul>
-                <li *ngFor="let ingredient of data.ingredients">
+                <li *ngFor="let ingredient of recipe.ingredients">
                     {{ingredient}}
                 </li>
             </ul>
@@ -13,7 +13,7 @@
         <div class="col">
             <h4>Directions</h4>
             <ol>
-                <li *ngFor="let ingredient of data.directions">
+                <li *ngFor="let ingredient of recipe.directions">
                     {{ingredient}}
                 </li>
             </ol>
@@ -22,17 +22,17 @@
     <div class="row">
         <div class="col">
             <h4>Nutrition Info</h4>
-            <div>Rating: {{data.rating}} / 5</div>
-            <div>Calories: {{data.calories}}</div>
-            <div>Fat: {{data.fat}}</div>
-            <div>Sodium: {{data.sodium}}</div>
-            <div>Protein: {{data.protein}}</div>
+            <div>Rating: {{recipe.rating}} / 5</div>
+            <div>Calories: {{recipe.calories}}</div>
+            <div>Fat: {{recipe.fat}}</div>
+            <div>Sodium: {{recipe.sodium}}</div>
+            <div>Protein: {{recipe.protein}}</div>
         </div>
     </div>
     <div class="row">
         <div class="col">
             <h4>Comments</h4>
-            <div class="media" *ngFor="let comment of webService.recipeComments|async">
+            <div class="media" *ngFor="let comment of comments">
                 <div class="media-body">
 
                 </div>

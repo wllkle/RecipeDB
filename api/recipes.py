@@ -48,10 +48,12 @@ def get_recipe_comments(_id):
     return response(200, return_data)
 
 
-def new_recipe_comment(_id, user_id):
+def new_recipe_comment(_id, user):
+    print(user)
     comment = {
         '_id': ObjectId(),
-        'user_id': user_id,
+        'user_id': user['_id'],
+        'user_name': user['username'],
         'body': request.form['body'],
         'date': datetime.utcnow()
     }

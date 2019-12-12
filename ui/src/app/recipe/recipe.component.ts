@@ -13,10 +13,20 @@ export class RecipeComponent implements OnInit {
     }
 
     navbarCollapsed = true;
+    recipe;
+    comments;
 
     ngOnInit() {
         const {id} = this.route.snapshot.params;
         this.webService.getRecipe(id);
         this.webService.getRecipeComments(id);
+
+        this.webService.recipeData.subscribe(data => {
+            this.recipe = data;
+        });
+        this.webService.recipeComments.subscribe(comments => {
+            this.comments = comments;
+            console.log(comments);
+        });
     }
 }
