@@ -1,5 +1,5 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {API_URL} from '../config';
 
@@ -72,7 +72,6 @@ export class AuthService {
             const user = localStorage.getItem('user');
             if (user && user.length > 0) {
                 const userObj = JSON.parse(user);
-                console.log('exp', userObj.exp);
                 if (new Date(userObj.exp) > new Date()) {
                     this._user.next(userObj);
                 } else {

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 
 import {AuthService} from '../../auth.service';
@@ -11,12 +11,18 @@ import {AuthService} from '../../auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-    constructor(private authService: AuthService, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
     }
 
     registerForm;
 
     ngOnInit() {
+        this.authService.user.subscribe(user => {
+            if (user.token) {
+                this.router.navigate(['']);
+            }
+        });
+
         this.registerForm = this.formBuilder.group({
             name: '',
             username: '',

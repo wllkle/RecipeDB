@@ -1,4 +1,5 @@
-@import "../../app";
+@import '../../app';
+@import '../recipes/recipes.component';
 
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../../assets/hero.jpg');
@@ -55,5 +56,11 @@
                 background-color: darken($white, 10%);
             }
         }
+    }
+}
+
+.top-recipes {
+    h1 {
+        margin-bottom: 2rem;
     }
 }

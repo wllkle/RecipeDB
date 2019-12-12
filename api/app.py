@@ -7,7 +7,7 @@ from pymongo import MongoClient
 
 from util import response
 from auth import login, logout, register
-from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment
+from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, get_top_recipes
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -81,6 +81,11 @@ def app_register():
 @app.route('/recipes', methods=['GET'])
 def recipes():
     return get_recipes()
+
+
+@app.route('/recipes/top', methods=['GET'])
+def top_recipes():
+    return get_top_recipes()
 
 
 @app.route('/recipe/<string:_id>', methods=['GET'])

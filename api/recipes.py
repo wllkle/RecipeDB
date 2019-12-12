@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from config import ITEMS_PER_PAGE, MONGO
 from bson import ObjectId
 from datetime import datetime
+from random import shuffle
 
 from util import response
 
@@ -70,3 +71,13 @@ def delete_recipe_comment(_id, _cid, user_id):
                 return response(403, 'This is not your comment to delete.')
 
     return response(404, 'No item found')
+
+
+def get_top_recipes():
+    results = recipes.find({'rating': 5}, {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).limit(100)
+    recipe_list = []
+    for r in results:
+        r['_id'] = str(r['_id'])
+        recipe_list.append(r)
+    shuffle(recipe_list)
+    return response(200, recipe_list[:6])
