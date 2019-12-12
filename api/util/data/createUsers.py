@@ -9,9 +9,16 @@ data = [
     {
         'name': 'Rob Wilkie',
         'username': 'rob',
-        'password': b'rob',
+        'password': b'password1',
         'email': 'rob@wilkie.io',
         'admin': True
+    },
+    {
+        'name': 'Lola the Cat',
+        'username': 'lola',
+        'password': b'cat',
+        'email': 'lola@wilkie.io',
+        'admin': False
     }
 ]
 
