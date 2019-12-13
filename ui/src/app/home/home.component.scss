@@ -25,14 +25,14 @@
 
     .search {
         display: flex;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
 
         input {
             width: 100%;
             padding: 1rem;
             border: 1px solid $white;
-            border-top-left-radius: 1rem;
-            border-bottom-left-radius: 1rem;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
         }
 
         div {
@@ -42,8 +42,8 @@
             background-color: $white;
             padding: 0 1.5rem;
             border-left: 1px solid $border;
-            border-top-right-radius: 1rem;
-            border-bottom-right-radius: 1rem;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
             cursor: pointer;
             transition: background-color $t-fast;
 

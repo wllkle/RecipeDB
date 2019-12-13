@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {API_URL} from '../config';
+import {isEqual} from 'lodash';
 
 @Injectable()
 export class WebService {
@@ -66,7 +67,9 @@ export class WebService {
     searchRecipes(criteria: string, page?: number) {
         if (criteria.length > 0) {
             this.http.get(`${API_URL}/recipes/search?criteria=${criteria}${page > 1 ? `&p=${page}` : ''}`).subscribe(response => {
-                this._recipeSearch.next(response);
+                if (!isEqual(response, this._recipeSearch.getValue())) {
+                    this._recipeSearch.next(response);
+                }
             });
         }
     }
@@ -76,9 +79,7 @@ export class WebService {
         data.append('body', body);
 
         const headers = {
-            headers: new HttpHeaders({
-                'x-access-token': token
-            })
+            headers: new HttpHeaders({'x-access-token': token})
         };
 
         this.http.post(`${API_URL}/recipe/${id}/comments`, data, headers).toPromise().then(response => {

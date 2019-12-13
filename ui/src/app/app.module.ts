@@ -15,6 +15,7 @@ import {RegisterComponent} from './auth/register/register.component';
 import {RecipesComponent} from './recipes/recipes.component';
 import {RecipeComponent} from './recipe/recipe.component';
 import {SearchComponent} from './recipes/search/search.component';
+import {AccountComponent} from './account/account.component';
 
 const routes = [
     {path: '', component: HomeComponent},
@@ -23,7 +24,8 @@ const routes = [
     {path: 'recipes', component: RecipesComponent},
     {path: 'recipes/search/:criteria', component: SearchComponent},
     {path: 'recipes/:page', component: RecipesComponent},
-    {path: 'recipe/:id', component: RecipeComponent}
+    {path: 'recipe/:id', component: RecipeComponent},
+    {path: 'account', component: AccountComponent}
 ];
 
 @NgModule({
@@ -35,7 +37,8 @@ const routes = [
         LoginComponent,
         NavComponent,
         RegisterComponent,
-        SearchComponent
+        SearchComponent,
+        AccountComponent
     ],
     imports: [
         BrowserModule,

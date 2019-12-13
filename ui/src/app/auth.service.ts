@@ -49,17 +49,10 @@ export class AuthService {
         const token = this._user.getValue().token;
         if (token && token.length > 0) {
             const headers = {
-                headers: new HttpHeaders({
-                    'x-access-token': token
-                })
+                headers: new HttpHeaders({'x-access-token': token})
             };
             this.http.post(`${API_URL}/logout`, null, headers).toPromise().then(response => {
-                this._user.next({
-                    name: null,
-                    username: null,
-                    token: null,
-                    exp: null
-                });
+                this._user.next(getDefaultUserObject());
                 localStorage.removeItem('user');
             }).catch(error => {
                 console.log(error);
@@ -85,7 +78,7 @@ export class AuthService {
     }
 }
 
-const getDefaultUserObject = () => {
+export const getDefaultUserObject = () => {
     return {
         name: null,
         username: null,

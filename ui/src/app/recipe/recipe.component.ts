@@ -52,5 +52,8 @@ export class RecipeComponent implements OnInit {
         const {id} = this.route.snapshot.params;
         const {body} = this.commentBox.value;
         this.webService.comment(id, body, this.token);
+        this.commentBox = this.formBuilder.group({
+            body: ''
+        });
     }
 }

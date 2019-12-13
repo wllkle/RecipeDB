@@ -1,2 +1,39 @@
 @import '../../../app';
 @import '../recipes.component';
+
+.search {
+    display: flex;
+    border-radius: 0.5rem;
+    border: 1px solid $border;
+    margin-bottom: 2rem;
+
+    input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid $white;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $white;
+        padding: 0 1.5rem;
+        border-left: 1px solid $border;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color $t-fast;
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        &:hover {
+            background-color: darken($white, 10%);
+        }
+    }
+}

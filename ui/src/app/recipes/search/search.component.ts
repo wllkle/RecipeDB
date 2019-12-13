@@ -14,8 +14,18 @@ export class SearchComponent implements OnInit {
     constructor(private webService: WebService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     }
 
+    searchBox;
+
     ngOnInit() {
-        this.webService.searchRecipes(this.route.snapshot.params.criteria);
+        const {criteria} = this.route.snapshot.params;
+        this.webService.searchRecipes(criteria);
+
+        this.searchBox = this.formBuilder.group({criteria});
     }
 
+    search() {
+        const {criteria} = this.searchBox.value;
+        this.webService.searchRecipes(criteria)
+        this.router.navigate(['recipes', 'search', criteria]);
+    }
 }
