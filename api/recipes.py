@@ -12,7 +12,6 @@ db = client.RecipeDB
 recipes = db.recipes
 users = db.users
 
-
 def get_recipe(_id):
     recipe = recipes.find_one({'_id': ObjectId(_id)}, {'comments': 0})
 
@@ -85,3 +84,19 @@ def get_top_recipes():
         recipe_list.append(recipe)
     shuffle(recipe_list)
     return response(200, recipe_list[:6])
+
+
+def search_recipes():
+    criteria = str(request.args.get('criteria'))
+    if len(criteria) != 0:
+        page_num = 1
+
+        start = ITEMS_PER_PAGE * (page_num - 1)
+        recipe_list = []
+        for r in recipes.find({'title': {'$regex': criteria, "$options": "-i"}}, {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).skip(start).limit(ITEMS_PER_PAGE):
+            r['_id'] = str(r['_id'])
+            recipe_list.append(r)
+
+        return response(200, recipe_list)
+    else:
+        return response(400, 'No search criteria provided.')

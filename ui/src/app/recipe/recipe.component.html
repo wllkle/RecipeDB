@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col">
             <h4>Ingredients</h4>
-            <ul>
+            <ul *ngIf="recipe.ingredients">
                 <li *ngFor="let ingredient of recipe.ingredients">
                     {{ingredient}}
                 </li>
@@ -12,7 +12,7 @@
         </div>
         <div class="col">
             <h4>Directions</h4>
-            <ol>
+            <ol *ngIf="recipe.directions">
                 <li *ngFor="let ingredient of recipe.directions">
                     {{ingredient}}
                 </li>
@@ -32,11 +32,19 @@
     <div class="row">
         <div class="col">
             <h4>Comments</h4>
-            <div class="media" *ngFor="let comment of comments">
-                <div class="media-body">
-
+            <ul class="list-group">
+                <div class="list-group-item comment-box" *ngIf="token !== null" [formGroup]="commentBox">
+                    <textarea formControlName="body"></textarea>
+                    <button class="btn" (click)="comment()">Comment</button>
                 </div>
-            </div>
+                <div *ngFor="let comment of comments" class="list-group-item comment">
+                    <div class="info">
+                        <div class="name">{{comment.user_name}}</div>
+                        <div class="date">{{comment.date}}</div>
+                    </div>
+                    <div>{{comment.body}}</div>
+                </div>
+            </ul>
         </div>
     </div>
 </div>

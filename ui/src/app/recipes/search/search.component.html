@@ -1,0 +1,13 @@
+<div class="wrap vertical-wrap recipe-container">
+    <div *ngFor="let recipe of webService.recipeSearch | async" class="recipe">
+        <div class="card" [routerLink]="['/recipe', recipe._id]">
+            <h5 class="card-header">{{recipe.title}}</h5>
+            <div class="card-body">
+                {{recipe.desc}}
+            </div>
+            <div class="card-footer">
+                {{recipe.calories}} calories
+            </div>
+        </div>
+    </div>
+</div>

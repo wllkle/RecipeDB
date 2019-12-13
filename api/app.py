@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from functools import wraps
-from config import SECRET_KEY, MONGO
+from config import SECRET_KEY, MONGO, MONGO_INDEXES
 from jwt import decode
-from pymongo import MongoClient
+from pymongo import MongoClient, TEXT
 
 from util import response
 from auth import login, logout, register
-from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, get_top_recipes
+from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
+    get_top_recipes, search_recipes
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -18,9 +19,9 @@ blacklist = db.blacklist
 
 _user = None
 
-
-# gets total count of items in a collection
-# accidents.count_documents({}, None)
+for index in MONGO_INDEXES:
+    if index['name'] not in db.recipes.index_information():
+        db.recipes.create_index([(index['field'], TEXT)], name=index['name'], default_language='english')
 
 
 def jwt_required(func):
@@ -31,7 +32,7 @@ def jwt_required(func):
             token = request.headers['x-access-token']
 
         if not token:
-            return jsonify({'message': 'Token is missing'}), 401
+            return response(401, 'Token is missing')
 
         try:
             _user = decode(token, SECRET_KEY)
@@ -86,6 +87,11 @@ def recipes():
 @app.route('/recipes/top', methods=['GET'])
 def top_recipes():
     return get_top_recipes()
+
+
+@app.route('/recipes/search', methods=['GET'])
+def app_search_recipes():
+    return search_recipes()
 
 
 @app.route('/recipe/<string:_id>', methods=['GET'])

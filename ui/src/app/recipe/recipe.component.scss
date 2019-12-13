@@ -1,1 +1,47 @@
 @import '../../app';
+
+.comment-box {
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        width: 100%;
+        min-height: 5rem;
+        padding: 1rem;
+        border: 1px solid $border;
+        border-radius: 0.25rem;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        background-color: $brand;
+        color: $white;
+        margin-left: auto;
+        transition: background-color $t-fast;
+
+        &:hover {
+            background-color: darken($brand, 10%);
+        }
+    }
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+
+    .info {
+        display:flex;
+        justify-content: space-between;
+        .name {
+            font-weight: bold;
+        }
+
+        .date {
+            opacity: 0.5;
+        }
+    }
+
+    .body {
+
+    }
+}

@@ -14,12 +14,14 @@ import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {RecipesComponent} from './recipes/recipes.component';
 import {RecipeComponent} from './recipe/recipe.component';
+import {SearchComponent} from './recipes/search/search.component';
 
 const routes = [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'recipes', component: RecipesComponent},
+    {path: 'recipes/search/:criteria', component: SearchComponent},
     {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipe/:id', component: RecipeComponent}
 ];
@@ -32,7 +34,8 @@ const routes = [
         RecipeComponent,
         LoginComponent,
         NavComponent,
-        RegisterComponent
+        RegisterComponent,
+        SearchComponent
     ],
     imports: [
         BrowserModule,
