@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_cors import CORS
 from functools import wraps
 from config import SECRET_KEY, MONGO, MONGO_INDEXES
@@ -8,7 +8,7 @@ from pymongo import MongoClient, TEXT
 from util import response
 from auth import login, logout, register
 from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
-    get_top_recipes, search_recipes
+    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, bookmarks
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -26,7 +26,7 @@ for index in MONGO_INDEXES:
 
 def jwt_required(func):
     @wraps(func)
-    def jwt_required_wrapper(*args, **kwargs):  #
+    def jwt_required_wrapper(*args, **kwargs):
         global _user
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
@@ -49,6 +49,24 @@ def jwt_required(func):
     return jwt_required_wrapper
 
 
+def jwt_optional(func):
+    @wraps(func)
+    def jwt_optional_wrapper(*args, **kwargs):
+        global _user
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        try:
+            usr = decode(token, SECRET_KEY)
+            bl_token = blacklist.find_one({"token": token})
+            if bl_token is None:
+                _user = usr
+            return func(*args, **kwargs)
+        except:
+            return func(*args, **kwargs)
+
+    return jwt_optional_wrapper
+
+
 def admin_required(func):
     @wraps(func)
     def admin_required_wrapper(*args, **kwargs):
@@ -56,7 +74,6 @@ def admin_required(func):
         data = decode(token, SECRET_KEY)
         if data["admin"]:
             return func(*args, **kwargs)
-
         else:
             return response(401, 'Admin required')
 
@@ -95,8 +112,10 @@ def app_search_recipes():
 
 
 @app.route('/recipe/<string:_id>', methods=['GET'])
+@jwt_optional
 def recipe(_id):
-    return get_recipe(_id)
+    global _user
+    return get_recipe(_id, _user)
 
 
 @app.route('/recipe/<string:_id>/comments', methods=['GET'])
@@ -116,6 +135,27 @@ def new_comment(_id):
 def delete_comment(_id, _cid):
     global _user
     return delete_recipe_comment(_id, _cid, _user['_id'])
+
+
+@app.route('/recipe/<string:_id>/bookmark', methods=['POST'])
+@jwt_required
+def app_bookmark_recipe(_id):
+    global _user
+    return bookmark_recipe(_id, _user)
+
+
+@app.route('/recipe/<string:_id>/unbookmark', methods=['DELETE'])
+@jwt_required
+def app_unbookmark_recipe(_id):
+    global _user
+    return unbookmark_recipe(_id, _user)
+
+
+@app.route('/me/bookmarks', methods=['GET'])
+@jwt_required
+def app_bookmarks():
+    global _user
+    return bookmarks(_user['_id'])
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {WebService} from '../web.service';
 import {ActivatedRoute} from '@angular/router';
+
+import {RecipeService} from './recipes.service';
 
 @Component({
     selector: 'app-recipes',
@@ -9,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class RecipesComponent implements OnInit {
 
-    constructor(private webService: WebService, private route: ActivatedRoute) {
+    constructor(private recipeService: RecipeService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -18,6 +19,6 @@ export class RecipesComponent implements OnInit {
         if (page) {
             pageNum = +page;
         }
-        this.webService.getRecipes(pageNum);
+        this.recipeService.getRecipes(pageNum);
     }
 }

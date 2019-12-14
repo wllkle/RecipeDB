@@ -29,7 +29,8 @@
                     {{user['username']}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" [ngClass]="dropdownCollapsed ? '' : 'show'">
-                    <a class="dropdown-item" [routerLink]="'account'" (click)="dropdownCollapsed = !dropdownCollapsed">My account</a>
+                    <a class="dropdown-item" [routerLink]="'bookmarks'" (click)="dropdownCollapsed = !dropdownCollapsed">Bookmarks</a>
+                    <a class="dropdown-item" [routerLink]="'settings'" (click)="dropdownCollapsed = !dropdownCollapsed">Settings</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" (click)="logout()">Log out</a>
                 </div>

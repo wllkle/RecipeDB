@@ -1,14 +1,12 @@
-from flask import jsonify, make_response
+from flask import make_response, jsonify
 
 
 def response(status_code, data):
     if isinstance(data, str):
-        if status_code is not 200:
-            data = {'error': data}
-
-        else:
+        if 199 < status_code < 300:
             data = {'message': data}
-
+        else:
+            data = {'error': data}
     return make_response(jsonify(data), status_code)
 
 

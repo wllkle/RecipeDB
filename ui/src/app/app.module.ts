@@ -4,8 +4,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 
-import {AuthService} from './auth.service';
-import {WebService} from './web.service';
+import {AuthService} from './auth/auth.service';
+import {RecipeService} from './recipes/recipes.service';
+
 import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
 
@@ -13,9 +14,10 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {RecipesComponent} from './recipes/recipes.component';
-import {RecipeComponent} from './recipe/recipe.component';
+import {RecipeComponent} from './recipes/recipe/recipe.component';
 import {SearchComponent} from './recipes/search/search.component';
-import {AccountComponent} from './account/account.component';
+import {SettingsComponent} from './settings/settings.component';
+import {BookmarksComponent} from './bookmarks/bookmarks.component';
 
 const routes = [
     {path: '', component: HomeComponent},
@@ -25,7 +27,8 @@ const routes = [
     {path: 'recipes/search/:criteria', component: SearchComponent},
     {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipe/:id', component: RecipeComponent},
-    {path: 'account', component: AccountComponent}
+    {path: 'settings', component: SettingsComponent},
+    {path: 'bookmarks', component: BookmarksComponent}
 ];
 
 @NgModule({
@@ -38,7 +41,8 @@ const routes = [
         NavComponent,
         RegisterComponent,
         SearchComponent,
-        AccountComponent
+        SettingsComponent,
+        BookmarksComponent
     ],
     imports: [
         BrowserModule,
@@ -46,7 +50,7 @@ const routes = [
         RouterModule.forRoot(routes),
         ReactiveFormsModule
     ],
-    providers: [AuthService, WebService],
+    providers: [AuthService, RecipeService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

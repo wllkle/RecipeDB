@@ -1,0 +1,63 @@
+@import '../../app';
+
+.account {
+    display: flex;
+    flex-direction: column;
+
+    .menu, .content {
+        width: 100%;
+        transition: width $t-reg;
+    }
+
+    .menu {
+        .active {
+            border-color: $brand;
+            background-color: $brand;
+        }
+    }
+
+    .content {
+        padding-top: 2rem;
+
+        .password {
+            form {
+                display: flex;
+                flex-direction: column;
+
+                .btn {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+
+    @media screen {
+        @media (min-width: $breakpoint-md) {
+            flex-direction: row;
+
+            .menu {
+                width: 30%;
+            }
+
+            .content {
+                width: 70%;
+                padding-top: unset;
+                padding-left: 2rem;
+
+                .password {
+                    form {
+                        max-width: 20rem;
+                    }
+                }
+            }
+        }
+        @media (min-width: $breakpoint-xl) {
+            .menu {
+                width: 20%;
+            }
+            .content {
+                width: 80%;
+            }
+        }
+    }
+}

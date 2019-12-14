@@ -1,0 +1,22 @@
+<div class="page-header wrap vertical-wrap">
+    <h1>Bookmarks</h1>
+</div>
+
+<div class="wrap vertical-wrap">
+    <div class="recipe-container">
+        <div class="text-center" *ngIf="bookmarks.length === 0">
+            When you bookmark a recipe it will appear here.
+        </div>
+        <div *ngFor="let recipe of recipeService.bookmarks | async" class="recipe">
+            <div class="card" [routerLink]="['/recipe', recipe._id]">
+                <h5 class="card-header">{{recipe.title}}</h5>
+                <div class="card-body">
+                    {{recipe.desc}}
+                </div>
+                <div class="card-footer">
+                    {{recipe.calories}} calories
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

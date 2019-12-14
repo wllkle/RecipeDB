@@ -1,0 +1,82 @@
+@import '../../../app';
+
+.recipe-header {
+    .top-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        h1 {
+            margin-bottom: unset;
+        }
+
+        button {
+            margin-left: 1rem;
+        }
+    }
+
+    p {
+        margin-bottom: unset;
+    }
+}
+
+.recipe-nutrition {
+    display: flex;
+    flex-direction: column;
+
+    > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 1rem;
+    }
+
+    @media screen {
+        @media (min-width: $breakpoint-md) {
+            flex-direction: row;
+        }
+    }
+}
+
+.comment-box {
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        width: 100%;
+        min-height: 5rem;
+        padding: 1rem;
+        border: 1px solid $border;
+        border-radius: 0.25rem;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        margin-left: auto;
+    }
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+
+    .info {
+        display: flex;
+        justify-content: space-between;
+
+        .name {
+            font-weight: bold;
+        }
+
+        .date {
+            opacity: 0.5;
+        }
+    }
+
+    .body {
+
+    }
+}

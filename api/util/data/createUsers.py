@@ -11,6 +11,7 @@ data = [
         'username': 'rob',
         'password': b'password1',
         'email': 'rob@wilkie.io',
+        'bookmarks': [],
         'admin': True
     },
     {
@@ -18,6 +19,7 @@ data = [
         'username': 'lola',
         'password': b'cat',
         'email': 'lola@wilkie.io',
+        'bookmarks': [],
         'admin': False
     }
 ]

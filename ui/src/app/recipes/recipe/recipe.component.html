@@ -1,0 +1,72 @@
+<div class="page-header recipe-header wrap vertical-wrap">
+    <div class="top-content">
+        <h1>{{recipe.title}}</h1>
+        <div>
+            <button class="btn btn-rdb" (click)="copyLink()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M503.691 189.836L327.687 37.851C312.281 24.546 288 35.347 288 56.015v80.053C127.371 137.907 0 170.1 0 322.326c0 61.441 39.581 122.309 83.333 154.132 13.653 9.931 33.111-2.533 28.077-18.631C66.066 312.814 132.917 274.316 288 272.085V360c0 20.7 24.3 31.453 39.687 18.164l176.004-152c11.071-9.562 11.086-26.753 0-36.328z"/>
+                </svg>
+            </button>
+            <button class="btn btn-rdb" (click)="bookmark()" *ngIf="recipe.bookmarked == false">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path d="M0 512V48C0 21.49 21.49 0 48 0h288c26.51 0 48 21.49 48 48v464L192 400 0 512z"/>
+                </svg>
+            </button>
+            <button class="btn btn-danger" (click)="unbookmark(recipe['_id'])" *ngIf="recipe.bookmarked == true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path d="M0 512V48C0 21.49 21.49 0 48 0h288c26.51 0 48 21.49 48 48v464L192 400 0 512z"/>
+                </svg>
+            </button>
+        </div>
+
+    </div>
+    <p class="text-muted">{{recipe.desc}}</p>
+    <div>Rating: {{recipe.rating}} / 5</div>
+</div>
+
+<div class="page-header dark recipe-nutrition wrap">
+    <div>Calories: {{recipe.calories}}</div>
+    <div>Fat: {{recipe.fat}}</div>
+    <div>Sodium: {{recipe.sodium}}</div>
+    <div>Protein: {{recipe.protein}}</div>
+</div>
+
+<div class="wrap vertical-wrap" *ngIf="recipe !== {}">
+    <div class="row">
+        <div class="col">
+            <h4>Ingredients</h4>
+            <ul *ngIf="recipe.ingredients">
+                <li *ngFor="let ingredient of recipe.ingredients">
+                    {{ingredient}}
+                </li>
+            </ul>
+        </div>
+        <div class="col">
+            <h4>Directions</h4>
+            <ol *ngIf="recipe.directions">
+                <li *ngFor="let ingredient of recipe.directions">
+                    {{ingredient}}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4>Comments</h4>
+            <ul class="list-group">
+                <div class="list-group-item comment-box" *ngIf="token !== null" [formGroup]="commentBox">
+                    <textarea formControlName="body"></textarea>
+                    <button class="btn btn-rdb" (click)="comment()">Comment</button>
+                </div>
+                <div *ngFor="let comment of comments" class="list-group-item comment">
+                    <div class="info">
+                        <div class="name">{{comment.user_name}}</div>
+                        <div class="date">{{comment.date}}</div>
+                    </div>
+                    <div>{{comment.body}}</div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>

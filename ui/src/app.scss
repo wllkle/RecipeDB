@@ -4,6 +4,7 @@ $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1480px;
+$breakpoint-xxl: 1920px;
 
 // colors
 $brand: #5248d7;
@@ -34,6 +35,10 @@ $t-reg: 500ms;
             padding-right: 8rem;
         }
         @media (min-width: $breakpoint-xl) {
+            padding-left: 16rem;
+            padding-right: 16rem;
+        }
+        @media (min-width: $breakpoint-xxl) {
             padding-left: 24rem;
             padding-right: 24rem;
         }
@@ -49,5 +54,32 @@ $t-reg: 500ms;
     @media screen and (min-width: $breakpoint-md) {
         padding-top: 4rem;
         padding-bottom: 4rem;
+    }
+}
+
+.btn {
+    transition: background-color $t-fast;
+
+    svg {
+        fill: $white;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    &.btn-rdb {
+        background-color: $brand;
+        color: $white;
+
+        &:hover {
+            background-color: darken($brand, 10%);
+        }
+    }
+}
+
+.page-header {
+    background-color: darken($white, 10%);
+
+    &.dark {
+        background-color: darken($white, 15%);
     }
 }

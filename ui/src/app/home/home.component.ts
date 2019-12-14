@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 
-import {WebService} from '../web.service';
+import {RecipeService} from '../recipes/recipes.service';
 
 @Component({
     selector: 'app-home',
@@ -11,13 +11,13 @@ import {WebService} from '../web.service';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private webService: WebService, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private recipeService: RecipeService, private router: Router, private formBuilder: FormBuilder) {
     }
 
     searchBox;
 
     ngOnInit() {
-        this.webService.getTopRecipes();
+        this.recipeService.topRecipes();
 
         this.searchBox = this.formBuilder.group({
             criteria: ''

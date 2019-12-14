@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 
-import {WebService} from '../../web.service';
+import {RecipeService} from '../recipes.service';
 
 @Component({
     selector: 'app-search',
@@ -11,21 +11,21 @@ import {WebService} from '../../web.service';
 })
 export class SearchComponent implements OnInit {
 
-    constructor(private webService: WebService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+    constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     }
 
     searchBox;
 
     ngOnInit() {
         const {criteria} = this.route.snapshot.params;
-        this.webService.searchRecipes(criteria);
+        this.recipeService.searchRecipes(criteria);
 
         this.searchBox = this.formBuilder.group({criteria});
     }
 
     search() {
         const {criteria} = this.searchBox.value;
-        this.webService.searchRecipes(criteria)
+        this.recipeService.searchRecipes(criteria)
         this.router.navigate(['recipes', 'search', criteria]);
     }
 }

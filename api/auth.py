@@ -37,7 +37,8 @@ def login():
                     'token': token.decode('UTF-8'),
                     'username': username,
                     'name': user['name'],
-                    'exp': exp_clean
+                    'exp': exp_clean,
+                    'id': str(user['_id'])
                 })
 
             else:

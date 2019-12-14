@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
-import {API_URL} from '../config';
+import {API_URL} from '../../config';
 
 @Injectable()
 export class AuthService {
