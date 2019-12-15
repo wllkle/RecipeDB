@@ -54,10 +54,14 @@ export class RecipeService {
                 if (!isEqual(response, this._data.getValue())) {
                     this._data.next(response);
                 }
+            }).catch(error => {
+                console.warn(error);
             });
         } else {
             this.http.get(`${API_URL}/recipe/${id}`).toPromise().then(response => {
                 this._data.next(response);
+            }).catch(error => {
+                console.warn(error);
             });
         }
     }
@@ -139,10 +143,32 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.get(`${API_URL}/me/bookmarks`, headers).toPromise().then(response => {
+        this.http.post(`${API_URL}/me/bookmarks`, headers).toPromise().then(response => {
             if (!isEqual(response, this._bookmarks.getValue())) {
                 this._bookmarks.next(response);
             }
+        });
+    }
+
+    scrapeBbc(url: string, token: string, navigate: Function) {
+        let formData = new FormData();
+        formData.append('url', url);
+        const headers = {
+            headers: new HttpHeaders({'x-access-token': token})
+        };
+        this.http.post(`${API_URL}/scrapebbc`, formData, headers).toPromise().then(response => {
+            if (response.inserted) {
+                navigate(response.inserted);
+            }
+        });
+    }
+
+    deleteRecipe(id: string, token: string) {
+        const headers = {
+            headers: new HttpHeaders({'x-access-token': token})
+        };
+        this.http.delete(`${API_URL}/recipe/${id}`, headers).toPromise().then(() => {
+            this.getRecipe(id, token);
         });
     }
 }

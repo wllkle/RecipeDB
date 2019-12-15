@@ -34,6 +34,7 @@
                     <a class="dropdown-item" [routerLink]="'bookmarks'"
                        (click)="dropdownCollapsed = !dropdownCollapsed">Bookmarks</a>
                     <a class="dropdown-item" [routerLink]="'settings'" (click)="dropdownCollapsed = !dropdownCollapsed">Settings</a>
+                    <a class="dropdown-item" *ngIf="user.admin === true" [routerLink]="'admin'" (click)="dropdownCollapsed = !dropdownCollapsed">Admin</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" (click)="logout()">Log out</a>
                 </div>

@@ -26,6 +26,7 @@ export class RecipeComponent implements OnInit {
     comments: [];
     commentBox;
     token: string = null;
+    admin: boolean = false;
 
     ngOnInit() {
         const {id} = this.route.snapshot.params;
@@ -37,12 +38,19 @@ export class RecipeComponent implements OnInit {
         this.authService.user.subscribe(user => {
             if (!isEqual(user, getDefaultUserObject())) {
                 this.token = user.token;
+                if (user.admin) {
+                    this.admin = true;
+                }
             } else {
                 this.token = null;
             }
         });
         this.recipeService.data.subscribe(data => {
-            this.recipe = data;
+            if (data.redirect === true) {
+                this.router.navigate(['']);
+            } else {
+                this.recipe = data;
+            }
         });
         this.recipeService.comments.subscribe(comments => {
             this.comments = comments;
@@ -83,5 +91,10 @@ export class RecipeComponent implements OnInit {
         selBox.select();
         document.execCommand('copy');
         document.body.removeChild(selBox);
+    }
+
+    delete() {
+        const {id} = this.route.snapshot.params;
+        this.recipeService.deleteRecipe(id, this.token);
     }
 }

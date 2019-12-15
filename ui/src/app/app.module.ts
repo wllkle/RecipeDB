@@ -21,6 +21,7 @@ import {RecipeComponent} from './recipes/recipe/recipe.component';
 import {SearchComponent} from './recipes/search/search.component';
 import {SettingsComponent} from './settings/settings.component';
 import {BookmarksComponent} from './bookmarks/bookmarks.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes = [
     {path: '', component: HomeComponent},
@@ -31,7 +32,8 @@ const routes = [
     {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipe/:id', component: RecipeComponent},
     {path: 'settings', component: SettingsComponent},
-    {path: 'bookmarks', component: BookmarksComponent}
+    {path: 'bookmarks', component: BookmarksComponent},
+    {path: 'admin', component: AdminComponent}
 ];
 
 @NgModule({
@@ -45,7 +47,8 @@ const routes = [
         RegisterComponent,
         SearchComponent,
         SettingsComponent,
-        BookmarksComponent
+        BookmarksComponent,
+        AdminComponent
     ],
     imports: [
         BrowserModule,

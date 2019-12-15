@@ -34,11 +34,12 @@ def login():
                 exp_clean = exp_clean[1:-1]
 
                 return response(200, {
-                    'token': token.decode('UTF-8'),
+                    'id': str(user['_id']),
                     'username': username,
                     'name': user['name'],
+                    'token': token.decode('UTF-8'),
                     'exp': exp_clean,
-                    'id': str(user['_id'])
+                    'admin': user['admin']
                 })
 
             else:

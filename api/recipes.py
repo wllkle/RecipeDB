@@ -1,9 +1,13 @@
 from flask import request
 from pymongo import MongoClient
-from config import ITEMS_PER_PAGE, MONGO
+from config import ITEMS_PER_PAGE, MONGO, HEADERS
 from bson import ObjectId
 from datetime import datetime
-from random import shuffle
+from random import shuffle, randrange
+from bs4 import BeautifulSoup
+from requests import get
+
+from pprint import pprint
 
 from util import response, trim
 
@@ -151,3 +155,58 @@ def bookmarks(_id):
         r['_id'] = str(r['_id'])
         bookmark_list.append(r)
     return response(200, bookmark_list)
+
+
+def scrape_bbc():
+    url = request.form['url']
+    if 'bbcgoodfood.com' not in url:
+        return response(400, 'Not a BBC link.')
+
+    if url is not None:
+        data = get(url, headers=HEADERS)
+        soup = BeautifulSoup(data.content, 'html.parser')
+
+        recipe = {
+            '_id': ObjectId(),
+            'title': soup.find(class_='recipe-header__title').getText(),
+            'desc': soup.find(class_='recipe-header__description').getText(),
+            'comments': [],
+            'rating': randrange(2, 5),
+            'categories': []
+        }
+
+        for i in soup.find(class_='nutrition'):
+            label = i.find(class_='nutrition__label').getText()
+            value = i.find(class_='nutrition__value').getText().replace('g', '')
+            if label == 'fat':
+                recipe['fat'] = value
+            elif label == 'protein':
+                recipe['protein'] = value
+            elif label == 'salt':
+                # 5g salt = 2000mg sodium (* 400)
+                recipe['sodium'] = round(float(value) * 400)
+            elif label == 'kcal':
+                recipe['calories'] = value
+
+        ingredients = []
+        for i in soup.find(class_='ingredients-list__group'):
+            ingredients.append(i.getText())
+        recipe['ingredients'] = ingredients
+
+        directions = []
+        for i in soup.find(class_='method__list'):
+            directions.append(i.getText())
+        recipe['directions'] = directions
+
+        pprint(recipe)
+        ins = recipes.insert_one(recipe)
+        print(ins)
+        return response(200, {'inserted': str(recipe['_id'])})
+
+    else:
+        return response(400, 'No suitable url provided.')
+
+
+def delete_recipe(_id):
+    recipes.delete_one({'_id': ObjectId(_id)})
+    return response(200, 'Recipe deleted.')
