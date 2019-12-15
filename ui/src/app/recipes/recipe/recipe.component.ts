@@ -46,7 +46,7 @@ export class RecipeComponent implements OnInit {
             }
         });
         this.recipeService.data.subscribe(data => {
-            if (data.redirect === true) {
+            if (data === null) {
                 this.router.navigate(['']);
             } else {
                 this.recipe = data;

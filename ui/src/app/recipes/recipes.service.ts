@@ -56,19 +56,23 @@ export class RecipeService {
                 }
             }).catch(error => {
                 console.warn(error);
+                this._data.next(null);
             });
         } else {
             this.http.get(`${API_URL}/recipe/${id}`).toPromise().then(response => {
                 this._data.next(response);
             }).catch(error => {
                 console.warn(error);
+                this._data.next(null);
             });
         }
     }
 
     getRecipeComments(id: string) {
-        this.http.get(`${API_URL}/recipe/${id}/comments`).subscribe(response => {
+        this.http.get(`${API_URL}/recipe/${id}/comments`).toPromise().then(response => {
             this._comments.next(response);
+        }).catch(error => {
+            console.warn(error);
         });
     }
 
