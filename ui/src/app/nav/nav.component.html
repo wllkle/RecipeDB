@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light wrap">
+<nav class="navbar navbar-expand-md navbar-light bg-light wrap"
+     (clickOutside)="navbarCollapsed === false ? navbarCollapsed = true : null">
     <a class="navbar-brand" [routerLink]="''">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path
@@ -24,12 +25,14 @@
             <li class="nav-item" *ngIf="user['token'] === null">
                 <a class="nav-link" [routerLink]="'register'" (click)="navbarCollapsed = true">Register</a>
             </li>
-            <li class="nav-item dropdown" *ngIf="user['token'] !== null">
+            <li class="nav-item dropdown" *ngIf="user['token'] !== null"
+                (clickOutside)="dropdownCollapsed === false ? dropdownCollapsed = true : null">
                 <a class="nav-link dropdown-toggle" role="button" (click)="dropdownCollapsed = !dropdownCollapsed">
                     {{user['username']}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" [ngClass]="dropdownCollapsed ? '' : 'show'">
-                    <a class="dropdown-item" [routerLink]="'bookmarks'" (click)="dropdownCollapsed = !dropdownCollapsed">Bookmarks</a>
+                    <a class="dropdown-item" [routerLink]="'bookmarks'"
+                       (click)="dropdownCollapsed = !dropdownCollapsed">Bookmarks</a>
                     <a class="dropdown-item" [routerLink]="'settings'" (click)="dropdownCollapsed = !dropdownCollapsed">Settings</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" (click)="logout()">Log out</a>

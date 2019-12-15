@@ -71,7 +71,7 @@ export class RecipeComponent implements OnInit {
         this.recipeService.unbookmarkRecipe(id, this.token);
     }
 
-    copyLink(){
+    copyLink() {
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';

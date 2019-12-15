@@ -9,10 +9,17 @@ $breakpoint-xxl: 1920px;
 // colors
 $brand: #5248d7;
 $white: #ffffff;
+$black: #000000;
 $border: #cccccc;
+$dark: lighten($black,10%);
 
 $t-fast: 250ms;
 $t-reg: 500ms;
+
+// global defaults
+* {
+    color: $dark;
+}
 
 // wrap
 .wrap {
@@ -78,6 +85,7 @@ $t-reg: 500ms;
 
 .page-header {
     background-color: darken($white, 10%);
+    user-select: none;
 
     &.dark {
         background-color: darken($white, 15%);

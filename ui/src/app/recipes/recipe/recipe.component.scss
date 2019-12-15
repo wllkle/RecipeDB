@@ -12,8 +12,13 @@
             margin-bottom: unset;
         }
 
-        button {
-            margin-left: 1rem;
+        .buttons {
+            display: flex;
+            flex-direction: row;
+
+            button {
+                margin-left: 1rem;
+            }
         }
     }
 
@@ -25,18 +30,50 @@
 .recipe-nutrition {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 
-    > div {
+    .nutrition-item {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        flex: 1;
-        padding: 1rem;
+        width: 100%;
+        padding: 2rem;
+        transition: width $t-reg ease-out;
+
+        svg {
+            fill: darken($white, 75%);
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .nutrition-title {
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.35rem;
+            color: darken($white, 75%);
+            opacity: 0.75;
+            padding: 0.5rem 0 0;
+        }
+
+        .nutrition-value {
+            color: darken($white, 75%);
+            font-weight: bold;
+        }
     }
 
     @media screen {
-        @media (min-width: $breakpoint-md) {
+        @media (min-width: $breakpoint-sm) {
             flex-direction: row;
+
+            .nutrition-item {
+                width: 50%;
+            }
+        }
+        @media (min-width: $breakpoint-md) {
+            .nutrition-item {
+                width: 25%;
+            }
         }
     }
 }

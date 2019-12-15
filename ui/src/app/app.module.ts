@@ -4,6 +4,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ClickOutsideModule} from 'ng-click-outside';
+
 import {AuthService} from './auth/auth.service';
 import {RecipeService} from './recipes/recipes.service';
 
@@ -34,11 +37,11 @@ const routes = [
 @NgModule({
     declarations: [
         AppComponent,
+        NavComponent,
         HomeComponent,
         RecipesComponent,
         RecipeComponent,
         LoginComponent,
-        NavComponent,
         RegisterComponent,
         SearchComponent,
         SettingsComponent,
@@ -48,7 +51,9 @@ const routes = [
         BrowserModule,
         HttpClientModule,
         RouterModule.forRoot(routes),
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgbModule,
+        ClickOutsideModule
     ],
     providers: [AuthService, RecipeService],
     bootstrap: [AppComponent]
