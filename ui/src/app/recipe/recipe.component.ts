@@ -71,6 +71,11 @@ export class RecipeComponent implements OnInit {
         });
     }
 
+    deleteComment(cid: string) {
+        const {id} = this.route.snapshot.params;
+        this.recipeService.deleteComment(id, cid, this.token);
+    }
+
     bookmark() {
         const {id} = this.route.snapshot.params;
         this.recipeService.bookmarkRecipe(id, this.token);

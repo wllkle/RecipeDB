@@ -89,6 +89,15 @@ export class RecipeService {
         });
     }
 
+    deleteComment(id: string, cid: string, token: string) {
+        const headers = {
+            headers: new HttpHeaders({'x-access-token': token})
+        };
+        this.http.delete(`${API_URL}/recipe/${id}/comments/${cid}`, headers).toPromise().then((response) => {
+            this._comments.next(response);
+        });
+    }
+
     bookmarkRecipe(id: string, token: string) {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
@@ -135,7 +144,7 @@ export class RecipeService {
 
     topRecipes() {
         if (this._top.getValue().length === 0) {
-            this.http.get(`${API_URL}/recipes/top`).subscribe(response => {
+            this.http.get(`${API_URL}/recipes/top`).toPromise().then(response => {
                 if (!isEqual(response, this._top.getValue())) {
                     this._top.next(response);
                 }

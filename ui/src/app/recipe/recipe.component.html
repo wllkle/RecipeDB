@@ -101,6 +101,7 @@
                     <div
                         *ngIf="token !== null && comment.user_id === userId"
                         class="btn btn-danger"
+                        (click)="deleteComment(comment._id)"
                     >
                         delete
                     </div>
