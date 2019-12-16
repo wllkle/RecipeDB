@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 
-import {AuthService, getDefaultUserObject} from '../../auth/auth.service';
+import {AuthService, getDefaultUserObject} from '../auth/auth.service';
 import {RecipeService} from '../recipes.service';
 import {isEqual} from 'lodash';
 
@@ -22,10 +22,11 @@ export class RecipeComponent implements OnInit {
         this.comments = [];
     }
 
-    recipe: any;
-    comments: [];
+    recipe: any = null;
+    comments: [] = null;
     commentBox;
     token: string = null;
+    userId: string = null;
     admin: boolean = false;
 
     ngOnInit() {
@@ -38,6 +39,7 @@ export class RecipeComponent implements OnInit {
         this.authService.user.subscribe(user => {
             if (!isEqual(user, getDefaultUserObject())) {
                 this.token = user.token;
+                this.userId = user.id;
                 if (user.admin) {
                     this.admin = true;
                 }

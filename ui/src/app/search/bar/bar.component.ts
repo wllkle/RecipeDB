@@ -50,6 +50,11 @@ export class BarComponent implements OnInit {
     }
 
     isInvalid(control) {
-        return this.searchForm.controls[control].invalid && this.searchForm.controls[control].touched;
+        const {controls} = this.searchForm;
+        if (controls[control].value.length > 0) {
+            return controls[control].invalid && controls[control].touched;
+        } else {
+            return false;
+        }
     }
 }

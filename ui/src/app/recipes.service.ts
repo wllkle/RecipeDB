@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
-import {API_URL} from '../../config';
+import {API_URL} from '../config';
 import {isEqual} from 'lodash';
 
 @Injectable()
@@ -164,7 +164,7 @@ export class RecipeService {
         };
         this.http.post(`${API_URL}/scrapebbc`, formData, headers).toPromise().then(response => {
             if (response.hasOwnProperty('inserted')) {
-                navigate(response.inserted);
+                navigate(response['inserted']);
             }
         });
     }

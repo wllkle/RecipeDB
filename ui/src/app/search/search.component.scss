@@ -1,0 +1,40 @@
+@import '../../app';
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    user-select: none;
+
+    .page-item {
+        cursor: pointer;
+
+        .page-link {
+            color: $dark;
+
+            svg {
+                width: 1rem;
+                height: 1rem;
+                fill: $dark;
+            }
+        }
+
+        &.disabled {
+            cursor: not-allowed;
+
+            svg {
+                fill: lighten($dark, 30%);
+            }
+        }
+
+        &.active {
+            .page-link {
+                background-color: $brand;
+                color: $white;
+                cursor: default;
+            }
+        }
+    }
+}

@@ -1,5 +1,4 @@
 @import '../../app';
-@import '../recipes/recipes.component';
 
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../../assets/hero.jpg');
@@ -20,15 +19,18 @@
 
     h1 {
         color: $white;
-        margin-bottom: 2rem;
+        //margin-bottom: 2rem;
+    }
+
+    > .wrap {
+        >.search-container {
+            >.search-invalid {
+                color: $white !important;
+            }
+        }
     }
 }
 
-.search-container {
-    .search-invalid {
-        color: $white !important;
-    }
-}
 
 .top-recipes {
     h1 {

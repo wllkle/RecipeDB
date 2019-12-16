@@ -7,7 +7,6 @@
             placeholder="Search recipes.."
             id="input-criteria"
         />
-        <!-- (keyup.enter)="" -->
         <button type="submit">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
@@ -15,5 +14,5 @@
             </svg>
         </button>
     </form>
-    <div class="search-invalid" *ngIf="isInvalid('criteria')"> Please enter three or more characters</div>
+    <div id="search-invalid" class="search-invalid" *ngIf="isInvalid('criteria')"> Please enter three or more characters</div>
 </div>

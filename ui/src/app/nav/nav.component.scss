@@ -3,7 +3,6 @@
 .navbar {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    //border-bottom: 1px solid $border;
     user-select: none;
 
     .navbar-brand {
@@ -47,6 +46,7 @@
 
         .nav-item {
             cursor: pointer;
+            font-size: 1.1rem;
         }
 
         @media screen and (min-width: $breakpoint-md) {

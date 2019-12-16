@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
-import {RecipeService} from '../recipes/recipes.service';
+import {RecipeService} from '../recipes.service';
 
 @Component({
     selector: 'app-admin',

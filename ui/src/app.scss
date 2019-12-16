@@ -14,13 +14,9 @@ $border: #cccccc;
 $dark: lighten($black, 10%);
 $error: #cc3333;
 
+// transition timings
 $t-fast: 250ms;
 $t-reg: 500ms;
-
-// global defaults
-* {
-    color: $dark;
-}
 
 // wrap
 .wrap {
@@ -106,5 +102,33 @@ a {
 
     h4 {
         font-weight: normal;
+    }
+}
+
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -1rem;
+
+    .recipe {
+        width: 100%;
+        padding: 1rem;
+
+        .card {
+            height: 100%;
+
+            h5 {
+                font-weight: bold;
+            }
+        }
+
+        @media screen {
+            @media (min-width: $breakpoint-md) {
+                width: 50%;
+            }
+            @media (min-width: $breakpoint-xl) {
+                width: calc(100% / 3);
+            }
+        }
     }
 }

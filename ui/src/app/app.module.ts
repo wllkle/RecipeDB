@@ -8,7 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ClickOutsideModule} from 'ng-click-outside';
 
 import {AuthService} from './auth/auth.service';
-import {RecipeService} from './recipes/recipes.service';
+import {RecipeService} from './recipes.service';
 
 import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
@@ -16,20 +16,17 @@ import {NavComponent} from './nav/nav.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
-import {RecipesComponent} from './recipes/recipes.component';
-import {RecipeComponent} from './recipes/recipe/recipe.component';
-import {SearchComponent} from './recipes/search/search.component';
+import {RecipeComponent} from './recipe/recipe.component';
+import {SearchComponent} from './search/search.component';
 import {SettingsComponent} from './settings/settings.component';
 import {BookmarksComponent} from './bookmarks/bookmarks.component';
-import { AdminComponent } from './admin/admin.component';
-import { BarComponent } from './recipes/search/bar/bar.component';
+import {AdminComponent} from './admin/admin.component';
+import {BarComponent} from './search/bar/bar.component';
 
 const routes = [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    // {path: 'recipes', component: RecipesComponent},
-    // {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipes/search/:criteria', component: SearchComponent},
     {path: 'recipes/search/:criteria/:page', component: SearchComponent},
     {path: 'recipe/:id', component: RecipeComponent},
@@ -43,7 +40,6 @@ const routes = [
         AppComponent,
         NavComponent,
         HomeComponent,
-        RecipesComponent,
         RecipeComponent,
         LoginComponent,
         RegisterComponent,
