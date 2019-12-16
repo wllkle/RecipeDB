@@ -96,9 +96,9 @@ def app_register():
     return register()
 
 
-@app.route('/recipes', methods=['GET'])
-def recipes():
-    return get_recipes()
+# @app.route('/recipes', methods=['GET'])
+# def recipes():
+#     return get_recipes()
 
 
 @app.route('/recipes/top', methods=['GET'])

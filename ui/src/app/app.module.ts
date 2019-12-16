@@ -22,14 +22,16 @@ import {SearchComponent} from './recipes/search/search.component';
 import {SettingsComponent} from './settings/settings.component';
 import {BookmarksComponent} from './bookmarks/bookmarks.component';
 import { AdminComponent } from './admin/admin.component';
+import { BarComponent } from './recipes/search/bar/bar.component';
 
 const routes = [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'recipes', component: RecipesComponent},
+    // {path: 'recipes', component: RecipesComponent},
+    // {path: 'recipes/:page', component: RecipesComponent},
     {path: 'recipes/search/:criteria', component: SearchComponent},
-    {path: 'recipes/:page', component: RecipesComponent},
+    {path: 'recipes/search/:criteria/:page', component: SearchComponent},
     {path: 'recipe/:id', component: RecipeComponent},
     {path: 'settings', component: SettingsComponent},
     {path: 'bookmarks', component: BookmarksComponent},
@@ -48,7 +50,8 @@ const routes = [
         SearchComponent,
         SettingsComponent,
         BookmarksComponent,
-        AdminComponent
+        AdminComponent,
+        BarComponent
     ],
     imports: [
         BrowserModule,

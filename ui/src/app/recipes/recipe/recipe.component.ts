@@ -80,17 +80,17 @@ export class RecipeComponent implements OnInit {
     }
 
     copyLink() {
-        const selBox = document.createElement('textarea');
-        selBox.style.position = 'fixed';
-        selBox.style.left = '0';
-        selBox.style.top = '0';
-        selBox.style.opacity = '0';
-        selBox.value = `http://localhost:4200/recipe/${this.route.snapshot.params.id}`;
-        document.body.appendChild(selBox);
-        selBox.focus();
-        selBox.select();
+        const link = document.createElement('textarea');
+        link.style.position = 'fixed';
+        link.style.left = '0';
+        link.style.top = '0';
+        link.style.opacity = '0';
+        link.value = `http://localhost:4200/recipe/${this.route.snapshot.params.id}`;
+        document.body.appendChild(link);
+        link.focus();
+        link.select();
         document.execCommand('copy');
-        document.body.removeChild(selBox);
+        document.body.removeChild(link);
     }
 
     delete() {

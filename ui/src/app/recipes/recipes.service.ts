@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {API_URL} from '../../config';
 import {isEqual} from 'lodash';
 
@@ -10,8 +10,8 @@ export class RecipeService {
         this._top = new BehaviorSubject([]);
         this.top = this._top.asObservable();
 
-        this._list = new BehaviorSubject([]);
-        this.list = this._list.asObservable();
+        // this._list = new BehaviorSubject([]);
+        // this.list = this._list.asObservable();
 
         this._data = new BehaviorSubject({});
         this.data = this._data.asObservable();
@@ -19,7 +19,7 @@ export class RecipeService {
         this._comments = new BehaviorSubject([]);
         this.comments = this._comments.asObservable();
 
-        this._search = new BehaviorSubject([]);
+        this._search = new Subject();
         this.search = this._search.asObservable();
 
         this._bookmarks = new BehaviorSubject([]);
@@ -29,8 +29,8 @@ export class RecipeService {
     private _top;
     public top;
 
-    private _list;
-    public list;
+    // private _list;
+    // public list;
 
     private _data;
     public data;
@@ -115,20 +115,20 @@ export class RecipeService {
         });
     }
 
-    getRecipes(page: number) {
-        this.http.get(`${API_URL}/recipes${page > 1 ? `?p=${page}` : ''}`).subscribe(response => {
-            if (!isEqual(response, this._list.getValue())) {
-                this._list.next(response);
-            }
-        });
-    }
+    // getRecipes(page: number) {
+    //     this.http.get(`${API_URL}/recipes${page > 1 ? `?p=${page}` : ''}`).subscribe(response => {
+    //         if (!isEqual(response, this._list.getValue())) {
+    //             this._list.next(response);
+    //         }
+    //     });
+    // }
 
     searchRecipes(criteria: string, page?: number) {
         if (criteria.length > 0) {
-            this.http.get(`${API_URL}/recipes/search?criteria=${criteria}${page > 1 ? `&p=${page}` : ''}`).subscribe(response => {
-                if (!isEqual(response, this._search.getValue())) {
-                    this._search.next(response);
-                }
+            this.http.get(`${API_URL}/recipes/search?criteria=${criteria}${page > 1 ? `&p=${page}` : ''}`).toPromise().then(response => {
+                this._search.next(response);
+            }).catch(error => {
+                console.log(error);
             });
         }
     }
@@ -147,10 +147,12 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.post(`${API_URL}/me/bookmarks`, headers).toPromise().then(response => {
+        this.http.get(`${API_URL}/me/bookmarks`, headers).toPromise().then(response => {
             if (!isEqual(response, this._bookmarks.getValue())) {
                 this._bookmarks.next(response);
             }
+        }).catch(error => {
+            console.log(error);
         });
     }
 
@@ -161,7 +163,7 @@ export class RecipeService {
             headers: new HttpHeaders({'x-access-token': token})
         };
         this.http.post(`${API_URL}/scrapebbc`, formData, headers).toPromise().then(response => {
-            if (response.inserted) {
+            if (response.hasOwnProperty('inserted')) {
                 navigate(response.inserted);
             }
         });

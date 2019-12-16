@@ -1,0 +1,70 @@
+@import '../../../../app';
+
+.search-container {
+    position: relative;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    .search {
+        display: flex;
+        border-radius: 0.5rem;
+        border: 1px solid $border;
+        box-shadow: none;
+        transition: border-color $t-fast, box-shadow $t-fast;
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $white;
+            padding: 0 1.5rem;
+            border: 0;
+            border-left: 1px solid $border;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color $t-fast;
+
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            &:hover {
+                background-color: darken($white, 10%);
+            }
+        }
+    }
+
+    .search-invalid {
+        position: absolute;
+        bottom: 0;
+        display: none;
+        align-items: center;
+        height: 2rem;
+        color: $error;
+    }
+
+    &.invalid {
+        .search {
+            border: 1px solid $error;
+            box-shadow: 0 0 10px $error;
+
+            button {
+                border-left: 1px solid $error;
+            }
+        }
+
+        .search-invalid {
+            display: flex;
+        }
+    }
+}

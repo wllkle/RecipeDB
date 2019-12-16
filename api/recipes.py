@@ -6,8 +6,7 @@ from datetime import datetime
 from random import shuffle, randrange
 from bs4 import BeautifulSoup
 from requests import get
-
-from pprint import pprint
+from math import ceil
 
 from util import response, trim
 
@@ -101,15 +100,30 @@ def search_recipes():
     criteria = str(request.args.get('criteria'))
     if len(criteria) != 0:
         page_num = 1
+        if request.args.get('p'):
+            page_num = int(request.args.get('p'))
+
+        page_count = ceil(
+            recipes.count_documents({'title': {'$regex': criteria, "$options": "-i"}}, None) / ITEMS_PER_PAGE)
+
+        if page_num > page_count:
+            page_num = page_count
 
         start = ITEMS_PER_PAGE * (page_num - 1)
+        if start < 0:
+            start = 0
+
         recipe_list = []
         for r in recipes.find({'title': {'$regex': criteria, "$options": "-i"}},
                               {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).skip(start).limit(ITEMS_PER_PAGE):
             r['_id'] = str(r['_id'])
             recipe_list.append(r)
 
-        return response(200, recipe_list)
+        return response(200, {
+            'data': recipe_list,
+            'page': page_num,
+            'pageCount': page_count
+        })
     else:
         return response(400, 'No search criteria provided.')
 
@@ -197,10 +211,7 @@ def scrape_bbc():
         for i in soup.find(class_='method__list'):
             directions.append(i.getText())
         recipe['directions'] = directions
-
-        pprint(recipe)
-        ins = recipes.insert_one(recipe)
-        print(ins)
+        recipes.insert_one(recipe)
         return response(200, {'inserted': str(recipe['_id'])})
 
     else:

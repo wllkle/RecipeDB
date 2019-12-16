@@ -11,7 +11,8 @@ $brand: #5248d7;
 $white: #ffffff;
 $black: #000000;
 $border: #cccccc;
-$dark: lighten($black,10%);
+$dark: lighten($black, 10%);
+$error: #cc3333;
 
 $t-fast: 250ms;
 $t-reg: 500ms;
@@ -64,6 +65,14 @@ $t-reg: 500ms;
     }
 }
 
+a {
+    text-decoration: none;
+
+    &:hover {
+        color: lighten($brand, 5%);
+    }
+}
+
 .btn {
     transition: background-color $t-fast;
 
@@ -89,5 +98,13 @@ $t-reg: 500ms;
 
     &.dark {
         background-color: darken($white, 15%);
+    }
+
+    h1, h4, p {
+        margin-bottom: unset;
+    }
+
+    h4 {
+        font-weight: normal;
     }
 }
