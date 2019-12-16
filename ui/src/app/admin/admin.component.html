@@ -1,0 +1,26 @@
+<div class="page-header wrap vertical-wrap">
+    <h1>Admin</h1>
+</div>
+
+<div class="page-header dark wrap admin-menu">
+    <div>Scrape New Recipe</div>
+</div>
+
+<div class="wrap vertical-wrap content">
+    <div class="scrape" *ngIf="activePage === 'scrape'">
+        <form [formGroup]="scrapeForm">
+            <div class="form-group">
+                <label for="url">BBC Recipe URL</label>
+                <input
+                    id="url"
+                    type="text"
+                    name="url"
+                    class="form-control"
+                    formControlName="url"
+                    placeholder="BBC Recipe URL"
+                />
+            </div>
+            <button class="btn btn-rdb" (click)="scrape()">Scrape</button>
+        </form>
+    </div>
+</div>

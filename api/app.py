@@ -8,7 +8,7 @@ from pymongo import MongoClient, TEXT
 from util import response
 from auth import login, logout, register
 from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
-    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, bookmarks
+    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, bookmarks, scrape_bbc, delete_recipe
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -96,9 +96,9 @@ def app_register():
     return register()
 
 
-@app.route('/recipes', methods=['GET'])
-def recipes():
-    return get_recipes()
+# @app.route('/recipes', methods=['GET'])
+# def recipes():
+#     return get_recipes()
 
 
 @app.route('/recipes/top', methods=['GET'])
@@ -116,6 +116,12 @@ def app_search_recipes():
 def recipe(_id):
     global _user
     return get_recipe(_id, _user)
+
+
+@app.route('/recipe/<string:_id>', methods=['DELETE'])
+@admin_required
+def app_delete_recipe(_id):
+    return delete_recipe(_id)
 
 
 @app.route('/recipe/<string:_id>/comments', methods=['GET'])
@@ -156,6 +162,12 @@ def app_unbookmark_recipe(_id):
 def app_bookmarks():
     global _user
     return bookmarks(_user['_id'])
+
+
+@app.route('/scrapebbc', methods=['POST'])
+@admin_required
+def app_scrape_bbc():
+    return scrape_bbc()
 
 
 if __name__ == '__main__':

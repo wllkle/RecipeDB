@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 
 import {AuthService} from '../auth.service';
 
@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
         });
 
         this.loginForm = this.formBuilder.group({
-            username: '',
-            password: ''
+            username: ['', [Validators.required, Validators.minLength(3)]],
+            password: ['', [Validators.required, Validators.minLength(8)]]
         });
     }
 

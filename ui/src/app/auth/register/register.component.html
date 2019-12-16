@@ -1,6 +1,9 @@
+<div class="page-header wrap vertical-wrap">
+    <h1>Register</h1>
+    <h4>Already have an account? <a [routerLink]="'/login'">Login now</a></h4>
+</div>
 <div class="wrap vertical-wrap">
     <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="submit()">
-        <h3>Register</h3>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" class="form-control" formControlName="name"/>

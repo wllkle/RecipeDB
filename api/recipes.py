@@ -1,9 +1,12 @@
 from flask import request
 from pymongo import MongoClient
-from config import ITEMS_PER_PAGE, MONGO
+from config import ITEMS_PER_PAGE, MONGO, HEADERS
 from bson import ObjectId
 from datetime import datetime
-from random import shuffle
+from random import shuffle, randrange
+from bs4 import BeautifulSoup
+from requests import get
+from math import ceil
 
 from util import response, trim
 
@@ -97,15 +100,30 @@ def search_recipes():
     criteria = str(request.args.get('criteria'))
     if len(criteria) != 0:
         page_num = 1
+        if request.args.get('p'):
+            page_num = int(request.args.get('p'))
+
+        page_count = ceil(
+            recipes.count_documents({'title': {'$regex': criteria, "$options": "-i"}}, None) / ITEMS_PER_PAGE)
+
+        if page_num > page_count:
+            page_num = page_count
 
         start = ITEMS_PER_PAGE * (page_num - 1)
+        if start < 0:
+            start = 0
+
         recipe_list = []
         for r in recipes.find({'title': {'$regex': criteria, "$options": "-i"}},
                               {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).skip(start).limit(ITEMS_PER_PAGE):
             r['_id'] = str(r['_id'])
             recipe_list.append(r)
 
-        return response(200, recipe_list)
+        return response(200, {
+            'data': recipe_list,
+            'page': page_num,
+            'pageCount': page_count
+        })
     else:
         return response(400, 'No search criteria provided.')
 
@@ -151,3 +169,55 @@ def bookmarks(_id):
         r['_id'] = str(r['_id'])
         bookmark_list.append(r)
     return response(200, bookmark_list)
+
+
+def scrape_bbc():
+    url = request.form['url']
+    if 'bbcgoodfood.com' not in url:
+        return response(400, 'Not a BBC link.')
+
+    if url is not None:
+        data = get(url, headers=HEADERS)
+        soup = BeautifulSoup(data.content, 'html.parser')
+
+        recipe = {
+            '_id': ObjectId(),
+            'title': soup.find(class_='recipe-header__title').getText(),
+            'desc': soup.find(class_='recipe-header__description').getText(),
+            'comments': [],
+            'rating': randrange(2, 5),
+            'categories': []
+        }
+
+        for i in soup.find(class_='nutrition'):
+            label = i.find(class_='nutrition__label').getText()
+            value = i.find(class_='nutrition__value').getText().replace('g', '')
+            if label == 'fat':
+                recipe['fat'] = value
+            elif label == 'protein':
+                recipe['protein'] = value
+            elif label == 'salt':
+                # 5g salt = 2000mg sodium (* 400)
+                recipe['sodium'] = round(float(value) * 400)
+            elif label == 'kcal':
+                recipe['calories'] = value
+
+        ingredients = []
+        for i in soup.find(class_='ingredients-list__group'):
+            ingredients.append(i.getText())
+        recipe['ingredients'] = ingredients
+
+        directions = []
+        for i in soup.find(class_='method__list'):
+            directions.append(i.getText())
+        recipe['directions'] = directions
+        recipes.insert_one(recipe)
+        return response(200, {'inserted': str(recipe['_id'])})
+
+    else:
+        return response(400, 'No suitable url provided.')
+
+
+def delete_recipe(_id):
+    recipes.delete_one({'_id': ObjectId(_id)})
+    return response(200, 'Recipe deleted.')

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {RecipeService} from '../recipes/recipes.service';
+import {RecipeService} from '../recipes.service';
 import {AuthService} from '../auth/auth.service';
 
 @Component({
