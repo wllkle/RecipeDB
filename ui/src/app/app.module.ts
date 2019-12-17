@@ -18,7 +18,6 @@ import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {RecipeComponent} from './recipe/recipe.component';
 import {SearchComponent} from './search/search.component';
-import {SettingsComponent} from './settings/settings.component';
 import {BookmarksComponent} from './bookmarks/bookmarks.component';
 import {AdminComponent} from './admin/admin.component';
 import {BarComponent} from './search/bar/bar.component';
@@ -30,7 +29,6 @@ const routes = [
     {path: 'recipes/search/:criteria', component: SearchComponent},
     {path: 'recipes/search/:criteria/:page', component: SearchComponent},
     {path: 'recipe/:id', component: RecipeComponent},
-    {path: 'settings', component: SettingsComponent},
     {path: 'bookmarks', component: BookmarksComponent},
     {path: 'admin', component: AdminComponent}
 ];
@@ -44,7 +42,6 @@ const routes = [
         LoginComponent,
         RegisterComponent,
         SearchComponent,
-        SettingsComponent,
         BookmarksComponent,
         AdminComponent,
         BarComponent

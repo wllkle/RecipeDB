@@ -7,7 +7,7 @@ import {AuthService} from '../auth.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss', '../auth.scss']
+    styleUrls: ['../auth.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
         });
 
         this.loginForm = this.formBuilder.group({
-            username: ['', [Validators.required, Validators.minLength(3)]],
-            password: ['', [Validators.required, Validators.minLength(8)]]
+            username: ['', Validators.required],
+            password: ['', Validators.required]
         });
     }
 

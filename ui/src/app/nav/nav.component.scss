@@ -47,6 +47,24 @@
         .nav-item {
             cursor: pointer;
             font-size: 1.1rem;
+
+            .nav-link {
+                color: $dark;
+            }
+
+            .dropdown-menu {
+                .dropdown-item {
+                    color: $dark;
+
+                    &:hover {
+                        background-color: darken($white, 5%);
+                    }
+
+                    &:active {
+                        background-color: darken($white, 10%);
+                    }
+                }
+            }
         }
 
         @media screen and (min-width: $breakpoint-md) {

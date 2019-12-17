@@ -63,9 +63,11 @@ $t-reg: 500ms;
 
 a {
     text-decoration: none;
+    color: $brand;
+    transition: color $t-fast;
 
     &:hover {
-        color: lighten($brand, 5%);
+        color: lighten($brand, 10%);
     }
 }
 

@@ -10,9 +10,6 @@ export class RecipeService {
         this._top = new BehaviorSubject([]);
         this.top = this._top.asObservable();
 
-        // this._list = new BehaviorSubject([]);
-        // this.list = this._list.asObservable();
-
         this._data = new BehaviorSubject({});
         this.data = this._data.asObservable();
 
@@ -28,9 +25,6 @@ export class RecipeService {
 
     private _top;
     public top;
-
-    // private _list;
-    // public list;
 
     private _data;
     public data;
@@ -123,14 +117,6 @@ export class RecipeService {
             }
         });
     }
-
-    // getRecipes(page: number) {
-    //     this.http.get(`${API_URL}/recipes${page > 1 ? `?p=${page}` : ''}`).subscribe(response => {
-    //         if (!isEqual(response, this._list.getValue())) {
-    //             this._list.next(response);
-    //         }
-    //     });
-    // }
 
     searchRecipes(criteria: string, page?: number) {
         if (criteria.length > 0) {

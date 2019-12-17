@@ -25,7 +25,7 @@ export class AuthService {
         data.append('username', username);
         data.append('password', password);
 
-        return this.http.post(`${API_URL}/register`, data).toPromise().then(response => {
+        this.http.post(`${API_URL}/register`, data).toPromise().then(response => {
             this.login(username, password);
         }).catch(error => {
             console.log(error);
