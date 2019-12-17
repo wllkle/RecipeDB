@@ -95,7 +95,8 @@ def register():
         'email': email,
         'username': username,
         'password': hashpw(str(password).encode('UTF-8'), gensalt()),
-        'admin': False
+        'admin': False,
+        'bookmarks': []
     }
     users.insert_one(user)
 

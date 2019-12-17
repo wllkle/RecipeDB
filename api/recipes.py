@@ -22,12 +22,12 @@ def get_recipe(_id, _user):
         recipe['_id'] = str(recipe['_id'])
         if _user is not None:
             user = users.find_one({'_id': ObjectId(_user['_id'])}, {'bookmarks': 1})
-            if user is not None:
+            if user is not None and len(user['bookmarks']) > 0:
                 for bookmark in user['bookmarks']:
                     if bookmark['recipeId'] == _id:
                         recipe['bookmarked'] = True
-        if recipe.get('bookmarked') is None:
-            recipe['bookmarked'] = False
+                if recipe.get('bookmarked') is None:
+                    recipe['bookmarked'] = False
         return response(200, recipe)
     else:
         return response(404, 'No recipe found')
@@ -117,6 +117,7 @@ def search_recipes():
         for r in recipes.find({'title': {'$regex': criteria, "$options": "-i"}},
                               {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1}).skip(start).limit(ITEMS_PER_PAGE):
             r['_id'] = str(r['_id'])
+            r['desc'] = trim(r['desc'], 160)
             recipe_list.append(r)
 
         return response(200, {
@@ -160,13 +161,14 @@ def unbookmark_recipe(_id, _user):
     return response(202, 'Recipe not bookmarked.')
 
 
-def bookmarks(_id):
+def get_bookmarks(_id):
     result = users.find_one({'_id': ObjectId(_id)}, {'bookmarks': 1})
     bookmark_list = []
     for bookmark in result['bookmarks']:
         r = recipes.find_one({'_id': ObjectId(bookmark['recipeId'])},
                              {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1})
         r['_id'] = str(r['_id'])
+        r['desc'] = trim(r['desc'], 160)
         bookmark_list.append(r)
     return response(200, bookmark_list)
 

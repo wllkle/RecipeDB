@@ -7,8 +7,8 @@ from pymongo import MongoClient, TEXT
 
 from util import response
 from auth import login, logout, register
-from recipes import get_recipes, get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
-    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, bookmarks, scrape_bbc, delete_recipe
+from recipes import get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
+    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, get_bookmarks, scrape_bbc, delete_recipe
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -159,9 +159,9 @@ def app_unbookmark_recipe(_id):
 
 @app.route('/me/bookmarks', methods=['GET'])
 @jwt_required
-def app_bookmarks():
+def app_get_bookmarks():
     global _user
-    return bookmarks(_user['_id'])
+    return get_bookmarks(_user['_id'])
 
 
 @app.route('/scrapebbc', methods=['POST'])
