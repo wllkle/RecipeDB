@@ -5,7 +5,10 @@
     <app-search-bar></app-search-bar>
 </div>
 <div class="wrap vertical-wrap">
-    <div class="recipe-container" *ngIf="results.hasOwnProperty('data') && results.data.length > 0">
+    <div class="text-center" *ngIf="results.data && results.data.length === 0">
+        No results found for "{{route.snapshot.params.criteria}}", try searching for something else.
+    </div>
+    <div class="recipe-container" *ngIf="results.data && results.data.length > 0">
         <div *ngFor="let recipe of results.data" class="recipe">
             <div class="card" [routerLink]="['/recipe', recipe._id]">
                 <h5 class="card-header">{{recipe.title}}</h5>

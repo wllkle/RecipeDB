@@ -91,7 +91,6 @@ export class RecipeService {
             this._comments.next(response);
             return {message: 'Your comment has been deleted successfully.'};
         }).catch(error => {
-            console.log(error);
             return {error: 'An error occurred deleting this comment.'};
         });
     }
@@ -133,7 +132,6 @@ export class RecipeService {
             this.http.get(`${API_URL}/recipes/search?criteria=${criteria}${page > 1 ? `&p=${page}` : ''}`).toPromise().then(response => {
                 this._search.next(response);
             }).catch(error => {
-                console.log(error);
             });
         }
     }
@@ -157,7 +155,6 @@ export class RecipeService {
                 this._bookmarks.next(response);
             }
         }).catch(error => {
-            console.log(error);
         });
     }
 
@@ -182,7 +179,6 @@ export class RecipeService {
             this.getRecipe(id, token);
             return {message: `Recipe has been deleted successfully.`};
         }).catch(error => {
-            console.log(error);
             return {error: 'An error occurred deleting this recipe.'};
         });
     }

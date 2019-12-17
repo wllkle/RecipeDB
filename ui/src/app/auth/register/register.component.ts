@@ -42,12 +42,8 @@ export class RegisterComponent implements OnInit {
                     this.notificationService.notify('Login error', res.error);
                 }
             });
-        } else {
-            Object.values(this.registerForm.controls).map(control => {
-                if (control.invalid) {
-                    console.log(control);
-                }
-            });
+        }else{
+
         }
     }
 

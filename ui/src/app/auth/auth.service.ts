@@ -60,7 +60,6 @@ export class AuthService {
                 this._user.next(getDefaultUserObject());
                 localStorage.removeItem('user');
             }).catch(error => {
-                console.log(error);
             });
         }
     }
@@ -77,7 +76,6 @@ export class AuthService {
                 }
             }
         } catch (e) {
-            console.log(e);
             this._user.next(getDefaultUserObject());
         }
     }

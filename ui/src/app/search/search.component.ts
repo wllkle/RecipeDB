@@ -44,7 +44,6 @@ export class SearchComponent implements OnInit {
         if (!page) {
             page = 2;
         } else {
-            console.log('next page greater than pageCount?', +page > this.results.pageCount);
             if (+page < this.results.pageCount) {
                 page = +page + 1;
             }
