@@ -14,9 +14,13 @@ export class NotificationService {
     private _notifications;
     public notifications;
 
-    notify(notification) {
+    notify(title: string, message: string) {
         const data = this._notifications.getValue();
-        data[uuid.v4()] = notification;
+        data[uuid.v4()] = {
+            title,
+            message,
+            date: Date.now(),
+        };
         this._notifications.next(data);
     }
 

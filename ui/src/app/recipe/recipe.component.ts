@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
+import {isEqual} from 'lodash';
 
 import {AuthService, getDefaultUserObject} from '../auth/auth.service';
 import {RecipeService} from '../recipes.service';
-import {isEqual} from 'lodash';
+import {NotificationService} from '../notification.service';
 
 @Component({
     selector: 'app-recipe',
@@ -15,6 +16,7 @@ export class RecipeComponent implements OnInit {
 
     constructor(private recipeService: RecipeService,
                 private authService: AuthService,
+                private notificationService: NotificationService,
                 private router: Router,
                 private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
@@ -73,17 +75,44 @@ export class RecipeComponent implements OnInit {
 
     deleteComment(cid: string) {
         const {id} = this.route.snapshot.params;
-        this.recipeService.deleteComment(id, cid, this.token);
+        this.recipeService.deleteComment(id, cid, this.token).then(res => {
+            if (res) {
+                if ((res as any).message) {
+                    this.notificationService.notify('Comment deleted', (res as any).message);
+                }
+                if ((res as any).error) {
+                    this.notificationService.notify('Error', (res as any).error);
+                }
+            }
+        });
     }
 
     bookmark() {
         const {id} = this.route.snapshot.params;
-        this.recipeService.bookmarkRecipe(id, this.token);
+        this.recipeService.bookmarkRecipe(id, this.token).then(res => {
+            if (res) {
+                if ((res as any).message) {
+                    this.notificationService.notify('Bookmark added', (res as any).message);
+                }
+                if ((res as any).error) {
+                    this.notificationService.notify('Error', (res as any).error);
+                }
+            }
+        });
     }
 
     unbookmark() {
         const {id} = this.route.snapshot.params;
-        this.recipeService.unbookmarkRecipe(id, this.token);
+        this.recipeService.unbookmarkRecipe(id, this.token).then(res => {
+            if (res) {
+                if ((res as any).message) {
+                    this.notificationService.notify('Bookmark removed', (res as any).message);
+                }
+                if ((res as any).error) {
+                    this.notificationService.notify('Error', (res as any).error);
+                }
+            }
+        });
     }
 
     copyLink() {
@@ -98,10 +127,20 @@ export class RecipeComponent implements OnInit {
         link.select();
         document.execCommand('copy');
         document.body.removeChild(link);
+        this.notificationService.notify('Link copied', 'A link to this recipe has been copied to your clipboard.');
     }
 
     delete() {
         const {id} = this.route.snapshot.params;
-        this.recipeService.deleteRecipe(id, this.token);
+        this.recipeService.deleteRecipe(id, this.token).then(res => {
+            if (res) {
+                if ((res as any).message) {
+                    this.notificationService.notify('Recipe deleted', (res as any).message);
+                }
+                if ((res as any).error) {
+                    this.notificationService.notify('Error', (res as any).error);
+                }
+            }
+        });
     }
 }

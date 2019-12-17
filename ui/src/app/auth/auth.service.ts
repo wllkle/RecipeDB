@@ -14,10 +14,6 @@ export class AuthService {
     private _user;
     public user;
 
-    setState(value) {
-        this._user.next(value);
-    }
-
     register(name: string, username: string, email: string, password: string) {
         let data = new FormData();
         data.append('name', name);
@@ -25,10 +21,14 @@ export class AuthService {
         data.append('username', username);
         data.append('password', password);
 
-        this.http.post(`${API_URL}/register`, data).toPromise().then(response => {
+        return this.http.post(`${API_URL}/register`, data).toPromise().then(() => {
             this.login(username, password);
         }).catch(error => {
-            console.log(error);
+            if (error.error) {
+                return error.error;
+            } else {
+                return null;
+            }
         });
     }
 
@@ -37,11 +37,16 @@ export class AuthService {
         data.append('username', username);
         data.append('password', password);
 
-        this.http.post(`${API_URL}/login`, data).toPromise().then(response => {
+        return this.http.post(`${API_URL}/login`, data).toPromise().then(response => {
             localStorage.setItem('user', JSON.stringify(response));
-            this.setState(response);
+            this._user.next(response);
+            return null;
         }).catch(error => {
-            console.log(error);
+            if (error.error) {
+                return error.error;
+            } else {
+                return null;
+            }
         });
     }
 

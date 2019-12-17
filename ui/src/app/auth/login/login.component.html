@@ -3,14 +3,20 @@
     <h4>Don't have an account? <a [routerLink]="'/register'">Register here</a></h4>
 </div>
 <div class="wrap vertical-wrap">
-    <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" class="form-control" formControlName="username"/>
+            <small *ngIf="isInvalid('username')" class="form-text text-muted">
+                The username field is required.
+            </small>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" class="form-control" formControlName="password"/>
+            <small *ngIf="isInvalid('password')" class="form-text text-muted">
+                The password field is required.
+            </small>
         </div>
         <button type="submit" class="btn btn-block btn-success">Login</button>
     </form>

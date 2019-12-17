@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationService} from '../notification.service';
+// @ts-ignore
+import moment from 'moment';
 
 @Component({
     selector: 'app-notifications',
@@ -11,17 +13,19 @@ export class NotificationsComponent implements OnInit {
     constructor(private notificationService: NotificationService) {
     }
 
-    notifications: string[] = null;
+    notifications = null;
 
     ngOnInit() {
         this.notificationService.notifications.subscribe(data => {
-            console.log(data);
             if (JSON.stringify(data) !== JSON.stringify({})) {
-                this.notifications = Object.entries(data).map(notification => {
-                    console.log('notification', notification);
-                    return notification.toString()
+                this.notifications = Object.entries(data).map(n => {
+                    // @ts-ignore
+                    const date = moment(n[1].date).fromNow();
+                    // @ts-ignore
+                    delete n[1].date;
+                    return {id: n[0], ...n[1], date};
                 });
-            }else {
+            } else {
                 this.notifications = null;
             }
         });

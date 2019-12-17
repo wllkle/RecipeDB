@@ -25,6 +25,12 @@
     p {
         margin-bottom: unset;
     }
+
+    .rating {
+        user-select: none;
+        pointer-events: none;
+        font-size: 1.5rem;
+    }
 }
 
 .recipe-nutrition {
@@ -158,7 +164,7 @@
         width: 100%;
 
         h2 {
-            margin-top: 2rem;
+            margin: 2rem 0;
         }
 
         .comment-box {

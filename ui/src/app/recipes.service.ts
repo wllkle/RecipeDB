@@ -87,8 +87,12 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.delete(`${API_URL}/recipe/${id}/comments/${cid}`, headers).toPromise().then((response) => {
+        return this.http.delete(`${API_URL}/recipe/${id}/comments/${cid}`, headers).toPromise().then((response) => {
             this._comments.next(response);
+            return {message: 'Your comment has been deleted successfully.'};
+        }).catch(error => {
+            console.log(error);
+            return {error: 'An error occurred deleting this comment.'};
         });
     }
 
@@ -96,12 +100,15 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.post(`${API_URL}/recipe/${id}/bookmark`, null, headers).toPromise().then(() => {
+        return this.http.post(`${API_URL}/recipe/${id}/bookmark`, null, headers).toPromise().then(() => {
             const recipe = this._data.getValue();
             if (!recipe.bookmarked) {
                 recipe.bookmarked = true;
                 this._data.next(recipe);
             }
+            return {message: `"${recipe.title}" has been added to your bookmarks.`};
+        }).catch(error => {
+            return {error: 'An error occurred bookmarking this recipe.'};
         });
     }
 
@@ -109,12 +116,15 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.delete(`${API_URL}/recipe/${id}/unbookmark`, headers).toPromise().then(() => {
+        return this.http.delete(`${API_URL}/recipe/${id}/unbookmark`, headers).toPromise().then(() => {
             const recipe = this._data.getValue();
             if (recipe.bookmarked) {
                 recipe.bookmarked = false;
                 this._data.next(recipe);
             }
+            return {message: `"${recipe.title}" has been removed from your bookmarks.`};
+        }).catch(error => {
+            return {error: 'An error occurred removing this recipe from your bookmarks.'};
         });
     }
 
@@ -168,10 +178,12 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.delete(`${API_URL}/recipe/${id}`, headers).toPromise().then(() => {
+        return this.http.delete(`${API_URL}/recipe/${id}`, headers).toPromise().then(() => {
             this.getRecipe(id, token);
+            return {message: `Recipe has been deleted successfully.`};
         }).catch(error => {
             console.log(error);
+            return {error: 'An error occurred deleting this recipe.'};
         });
     }
 }

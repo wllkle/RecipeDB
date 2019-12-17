@@ -30,7 +30,8 @@
         </div>
     </div>
     <p class="text-muted">{{recipe.desc}}</p>
-    <div>Rating: {{recipe.rating}} / 5</div>
+<!--    <div>Rating: {{recipe.rating}} / 5</div>-->
+    <ngb-rating class="rating" [readonly]="true" [(rate)]="recipe.rating" [max]="5"></ngb-rating>
 </div>
 <div class="page-header dark recipe-nutrition wrap">
     <div class="nutrition-item" *ngIf="recipe.calories !== undefined">

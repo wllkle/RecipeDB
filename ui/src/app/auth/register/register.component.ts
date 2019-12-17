@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 
 import {AuthService} from '../auth.service';
+import {NotificationService} from '../../notification.service';
 
 @Component({
     selector: 'app-register',
@@ -11,7 +12,7 @@ import {AuthService} from '../auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private notificationService: NotificationService, private router: Router, private formBuilder: FormBuilder) {
     }
 
     registerForm: FormGroup;
@@ -36,7 +37,11 @@ export class RegisterComponent implements OnInit {
     register() {
         if (this.registerForm.valid) {
             const {name, username, email, password} = this.registerForm.value;
-            this.authService.register(name, username, email, password);
+            this.authService.register(name, username, email, password).then(res => {
+                if (res) {
+                    this.notificationService.notify('Login error', res.error);
+                }
+            });
         } else {
             Object.values(this.registerForm.controls).map(control => {
                 if (control.invalid) {

@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
         this.authService.user.subscribe(user => {
             if (user.token) {
                 this.router.navigate(['']);
-                this.notificationService.notify(`Welcome ${user.name}`);
+                this.notificationService.notify('Login success', `Welcome to RecipeDB, ${user.name}.`);
             }
         });
 
@@ -31,10 +31,19 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    submit() {
+    login() {
         if (this.loginForm.valid) {
             const {username, password} = this.loginForm.value;
-            this.authService.login(username, password);
+            this.authService.login(username, password).then(res => {
+                if (res) {
+                    this.notificationService.notify('Login error', res.error);
+                }
+            });
         }
+    }
+
+    isInvalid(control) {
+        const {controls} = this.loginForm;
+        return controls[control].invalid && controls[control].touched;
     }
 }
