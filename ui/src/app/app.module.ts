@@ -21,6 +21,8 @@ import {SearchComponent} from './search/search.component';
 import {BookmarksComponent} from './bookmarks/bookmarks.component';
 import {AdminComponent} from './admin/admin.component';
 import {BarComponent} from './search/bar/bar.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import {NotificationService} from './notification.service';
 
 const routes = [
     {path: '', component: HomeComponent},
@@ -44,7 +46,8 @@ const routes = [
         SearchComponent,
         BookmarksComponent,
         AdminComponent,
-        BarComponent
+        BarComponent,
+        NotificationsComponent
     ],
     imports: [
         BrowserModule,
@@ -54,7 +57,7 @@ const routes = [
         NgbModule,
         ClickOutsideModule
     ],
-    providers: [AuthService, RecipeService],
+    providers: [AuthService, NotificationService, RecipeService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

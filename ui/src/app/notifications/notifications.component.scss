@@ -1,0 +1,23 @@
+@import '../../app';
+
+.notifications {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    width: 20rem;
+    z-index: 1000;
+
+    @media screen {
+        @media (min-width: $breakpoint-sm) {
+            right: 4rem;
+            bottom: 4rem;
+        }
+        @media (min-width: $breakpoint-md) {
+            right: 4rem;
+            bottom: 4rem;
+        }
+        @media (min-width: $breakpoint-lg) {
+            right: 8rem
+        }
+    }
+}

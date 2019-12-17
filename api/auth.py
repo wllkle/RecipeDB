@@ -93,7 +93,7 @@ def register():
     user = {
         'name': name,
         'email': email,
-        'username': username,
+        'username': username.lower(),
         'password': hashpw(str(password).encode('UTF-8'), gensalt()),
         'admin': False,
         'bookmarks': []

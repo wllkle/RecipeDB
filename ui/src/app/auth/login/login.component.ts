@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 
 import {AuthService} from '../auth.service';
+import {NotificationService} from '../../notification.service';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +12,7 @@ import {AuthService} from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private notificationService: NotificationService, private router: Router, private formBuilder: FormBuilder) {
     }
 
     loginForm;
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
         this.authService.user.subscribe(user => {
             if (user.token) {
                 this.router.navigate(['']);
+                this.notificationService.notify(`Welcome ${user.name}`);
             }
         });
 
@@ -30,7 +32,9 @@ export class LoginComponent implements OnInit {
     }
 
     submit() {
-        const {username, password} = this.loginForm.value;
-        this.authService.login(username, password);
+        if (this.loginForm.valid) {
+            const {username, password} = this.loginForm.value;
+            this.authService.login(username, password);
+        }
     }
 }

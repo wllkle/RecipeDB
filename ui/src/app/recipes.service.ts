@@ -170,6 +170,8 @@ export class RecipeService {
         };
         this.http.delete(`${API_URL}/recipe/${id}`, headers).toPromise().then(() => {
             this.getRecipe(id, token);
+        }).catch(error => {
+            console.log(error);
         });
     }
 }

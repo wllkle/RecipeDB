@@ -167,9 +167,12 @@ def get_bookmarks(_id):
     for bookmark in result['bookmarks']:
         r = recipes.find_one({'_id': ObjectId(bookmark['recipeId'])},
                              {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1})
-        r['_id'] = str(r['_id'])
-        r['desc'] = trim(r['desc'], 160)
-        bookmark_list.append(r)
+        if r is not None:
+            r['_id'] = str(r['_id'])
+            r['desc'] = trim(r['desc'], 160)
+            bookmark_list.append(r)
+        else:
+            users.update_one({'_id': ObjectId(_id)}, {'$pull': {'bookmarks': {'_id': bookmark['_id']}}})
     return response(200, bookmark_list)
 
 

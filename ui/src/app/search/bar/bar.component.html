@@ -1,7 +1,7 @@
 <div class="search-container" [ngClass]="{'invalid': isInvalid('criteria')}">
     <form [formGroup]="searchForm" (ngSubmit)="search()" class="search">
         <input
-            type="text"
+            type="search"
             name="criteria"
             formControlName="criteria"
             placeholder="Search recipes.."
