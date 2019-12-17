@@ -22,10 +22,11 @@ def get_recipe(_id, _user):
         recipe['_id'] = str(recipe['_id'])
         if _user is not None:
             user = users.find_one({'_id': ObjectId(_user['_id'])}, {'bookmarks': 1})
-            if user is not None and len(user['bookmarks']) > 0:
-                for bookmark in user['bookmarks']:
-                    if bookmark['recipeId'] == _id:
-                        recipe['bookmarked'] = True
+            if user is not None:
+                if len(user['bookmarks']) > 0:
+                    for bookmark in user['bookmarks']:
+                        if bookmark['recipeId'] == _id:
+                            recipe['bookmarked'] = True
                 if recipe.get('bookmarked') is None:
                     recipe['bookmarked'] = False
         return response(200, recipe)

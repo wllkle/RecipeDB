@@ -56,10 +56,16 @@ export class AuthService {
             const headers = {
                 headers: new HttpHeaders({'x-access-token': token})
             };
-            this.http.post(`${API_URL}/logout`, null, headers).toPromise().then(response => {
+            return this.http.post(`${API_URL}/logout`, null, headers).toPromise().then(response => {
                 this._user.next(getDefaultUserObject());
                 localStorage.removeItem('user');
+                // returm
             }).catch(error => {
+                return {error: 'An error occurred logging out, please try again.'};
+            });
+        } else {
+            return new Promise(resolve => {
+                resolve(null);
             });
         }
     }
