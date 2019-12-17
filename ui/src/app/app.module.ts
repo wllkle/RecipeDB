@@ -6,6 +6,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ClickOutsideModule} from 'ng-click-outside';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import {AuthService} from './auth/auth.service';
 import {RecipeService} from './recipes.service';
@@ -21,7 +22,7 @@ import {SearchComponent} from './search/search.component';
 import {BookmarksComponent} from './bookmarks/bookmarks.component';
 import {AdminComponent} from './admin/admin.component';
 import {BarComponent} from './search/bar/bar.component';
-import { NotificationsComponent } from './notifications/notifications.component';
+import {NotificationsComponent} from './notifications/notifications.component';
 import {NotificationService} from './notification.service';
 
 const routes = [
@@ -55,7 +56,8 @@ const routes = [
         RouterModule.forRoot(routes),
         ReactiveFormsModule,
         NgbModule,
-        ClickOutsideModule
+        ClickOutsideModule,
+        NgxPaginationModule
     ],
     providers: [AuthService, NotificationService, RecipeService],
     bootstrap: [AppComponent]

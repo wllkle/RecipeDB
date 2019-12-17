@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
+import {NotificationService} from '../notification.service';
 
 @Component({
     selector: 'app-nav',
@@ -8,7 +9,7 @@ import {AuthService} from '../auth/auth.service';
 })
 export class NavComponent implements OnInit {
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService, private notificationService: NotificationService) {
     }
 
     navbarCollapsed = true;
@@ -22,7 +23,9 @@ export class NavComponent implements OnInit {
     }
 
     logout() {
-        this.authService.logout();
+        this.authService.logout().then(res => {
+            this.notificationService.notify('Logged out', 'You have successfully logged out.');
+        });
         this.dropdownCollapsed = true;
     }
 }

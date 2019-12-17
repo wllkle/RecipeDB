@@ -22,10 +22,11 @@ def get_recipe(_id, _user):
         recipe['_id'] = str(recipe['_id'])
         if _user is not None:
             user = users.find_one({'_id': ObjectId(_user['_id'])}, {'bookmarks': 1})
-            if user is not None and len(user['bookmarks']) > 0:
-                for bookmark in user['bookmarks']:
-                    if bookmark['recipeId'] == _id:
-                        recipe['bookmarked'] = True
+            if user is not None:
+                if len(user['bookmarks']) > 0:
+                    for bookmark in user['bookmarks']:
+                        if bookmark['recipeId'] == _id:
+                            recipe['bookmarked'] = True
                 if recipe.get('bookmarked') is None:
                     recipe['bookmarked'] = False
         return response(200, recipe)
@@ -70,6 +71,23 @@ def new_recipe_comment(_id, user):
     return get_recipe_comments(_id)
 
 
+def update_recipe_comment(_id, _user):
+    try:
+        current_comment = recipes.find_one({'comments._id': ObjectId(_id)}, {'_id': 1, 'comments.$': 1})
+        if _user['_id'] != current_comment['comments'][0]['user_id']:
+            return response(400, 'This is not your comment to update.')
+    except:
+        return response(400, 'No comment found.')
+
+    updated_comment = {
+        'comments.$.user_id': current_comment['comments'][0]['user_id'],
+        'comments.$.body': request.form['body'],
+        'comments.$.date': datetime.utcnow()
+    }
+    recipes.update_one({'comments._id': ObjectId(_id)}, {'$set': updated_comment})
+    return get_recipe_comments(current_comment['_id'])
+
+
 def delete_recipe_comment(_id, _cid, user_id):
     result = recipes.find_one({'comments._id': ObjectId(_cid)}, {'comments.$': 1, '_id': 0})
     if result is not None:
@@ -103,8 +121,9 @@ def search_recipes():
         if request.args.get('p'):
             page_num = int(request.args.get('p'))
 
-        page_count = ceil(
-            recipes.count_documents({'title': {'$regex': criteria, "$options": "-i"}}, None) / ITEMS_PER_PAGE)
+        total = recipes.count_documents({'title': {'$regex': criteria, "$options": "-i"}}, None)
+
+        page_count = ceil(total / ITEMS_PER_PAGE)
 
         if page_num > page_count:
             page_num = page_count
@@ -123,7 +142,9 @@ def search_recipes():
         return response(200, {
             'data': recipe_list,
             'page': page_num,
-            'pageCount': page_count
+            'pageCount': page_count,
+            'perPage': ITEMS_PER_PAGE,
+            'total': total
         })
     else:
         return response(400, 'No search criteria provided.')

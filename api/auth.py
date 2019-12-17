@@ -4,7 +4,7 @@ from bcrypt import hashpw, gensalt, checkpw
 from config import MONGO, SECRET_KEY
 from util import response
 from datetime import datetime, timedelta
-from jwt import encode, decode
+from jwt import encode
 from json import dumps
 
 client = MongoClient(MONGO)

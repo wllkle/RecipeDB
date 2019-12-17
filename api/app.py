@@ -8,7 +8,8 @@ from pymongo import MongoClient, TEXT
 from util import response
 from auth import login, logout, register
 from recipes import get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
-    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, get_bookmarks, scrape_bbc, delete_recipe
+    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, get_bookmarks, scrape_bbc, delete_recipe, \
+    update_recipe_comment
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -136,6 +137,13 @@ def new_comment(_id):
     return new_recipe_comment(_id, _user)
 
 
+@app.route('/recipe/<string:_id>/comments', methods=['PUT'])
+@jwt_required
+def app_update_comment(_id):
+    global _user
+    return update_recipe_comment(_id, _user)
+
+
 @app.route('/recipe/<string:_id>/comments/<string:_cid>', methods=['DELETE'])
 @jwt_required
 def delete_comment(_id, _cid):
@@ -143,14 +151,14 @@ def delete_comment(_id, _cid):
     return delete_recipe_comment(_id, _cid, _user['_id'])
 
 
-@app.route('/recipe/<string:_id>/bookmark', methods=['POST'])
+@app.route('/recipe/<string:_id>/bookmark', methods=['PUT'])
 @jwt_required
 def app_bookmark_recipe(_id):
     global _user
     return bookmark_recipe(_id, _user)
 
 
-@app.route('/recipe/<string:_id>/unbookmark', methods=['DELETE'])
+@app.route('/recipe/<string:_id>/bookmark', methods=['DELETE'])
 @jwt_required
 def app_unbookmark_recipe(_id):
     global _user
@@ -171,4 +179,4 @@ def app_scrape_bbc():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=1234)
+    app.run(debug=True)

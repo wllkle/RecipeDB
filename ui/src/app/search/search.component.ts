@@ -13,7 +13,11 @@ import {RecipeService} from '../recipes.service';
 export class SearchComponent implements OnInit {
 
     constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
-        this.results = {};
+        this.results = {
+            data: null,
+            total: 0,
+            page: 0,
+        };
         this.pagination = [];
     }
 
@@ -35,34 +39,6 @@ export class SearchComponent implements OnInit {
         });
 
         this.searchBox = this.formBuilder.group({criteria});
-    }
-
-    next() {
-        const {criteria} = this.route.snapshot.params;
-        let {page} = this.route.snapshot.params;
-
-        if (!page) {
-            page = 2;
-        } else {
-            if (+page < this.results.pageCount) {
-                page = +page + 1;
-            }
-        }
-
-        this.goToPage(criteria, page);
-    }
-
-    previous() {
-        const {criteria} = this.route.snapshot.params;
-        let {page} = this.route.snapshot.params;
-
-        if (+page > 2) {
-            page = +page - 1;
-        } else {
-            page = undefined;
-        }
-
-        this.goToPage(criteria, page);
     }
 
     goToPage(criteria, page) {

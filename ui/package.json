@@ -27,6 +27,7 @@
         "moment": "^2.24.0",
         "ng-bootstrap": "^1.6.3",
         "ng-click-outside": "^5.1.1",
+        "ngx-pagination": "^5.0.0",
         "node-sass": "^4.13.0",
         "popper": "^1.0.1",
         "rxjs": "~6.4.0",

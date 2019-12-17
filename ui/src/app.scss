@@ -18,6 +18,10 @@ $error: #cc3333;
 $t-fast: 250ms;
 $t-reg: 500ms;
 
+body {
+    overflow: hidden;
+}
+
 // wrap
 .wrap {
     width: 100%;
