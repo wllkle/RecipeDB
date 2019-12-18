@@ -30,11 +30,12 @@
                 </svg>
             </div>
         </div>
-        <div class="page-item" *ngFor="let pg of pagination"
-             [ngClass]="{'active': results.page === pg + 1}">
-            <div class="page-link" (click)="goToPage(route.snapshot.params.criteria, pg + 1)">
-                {{pg + 1}}
-            </div>
+        <pagination-controls (pageChange)="goToPage(route.snapshot.params.criteria, $event)" class="pagination"></pagination-controls>
+        <div class="page-item" *ngFor="let item of results.data | paginate: {
+              itemsPerPage:results.perPage,
+              currentPage: results.page,
+              totalItems: results.total
+        }">
         </div>
         <div class="page-item" [ngClass]="{'disabled': results.page === results.pageCount}">
             <div class="page-link" (click)="next()">

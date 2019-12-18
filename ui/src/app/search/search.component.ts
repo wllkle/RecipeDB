@@ -13,13 +13,18 @@ import {RecipeService} from '../recipes.service';
 export class SearchComponent implements OnInit {
 
     constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
-        this.results = {};
+        this.results = {
+            data: null,
+            total: 0,
+            page: 0,
+        };
         this.pagination = [];
     }
 
     searchBox;
     results;
     pagination;
+    loading;
 
     ngOnInit() {
         const {criteria, page} = this.route.snapshot.params;
@@ -30,6 +35,7 @@ export class SearchComponent implements OnInit {
         }
 
         this.recipeService.search.subscribe(search => {
+            console.log(search);
             this.results = search;
             this.pagination = range(search.pageCount);
         });

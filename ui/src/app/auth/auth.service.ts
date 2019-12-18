@@ -81,7 +81,7 @@ export class AuthService {
                     this._user.next(getDefaultUserObject());
                 }
             }
-        } catch (e) {
+        } catch {
             this._user.next(getDefaultUserObject());
         }
     }

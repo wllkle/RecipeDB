@@ -104,8 +104,9 @@ def search_recipes():
         if request.args.get('p'):
             page_num = int(request.args.get('p'))
 
-        page_count = ceil(
-            recipes.count_documents({'title': {'$regex': criteria, "$options": "-i"}}, None) / ITEMS_PER_PAGE)
+        total = recipes.count_documents({'title': {'$regex': criteria, "$options": "-i"}}, None)
+
+        page_count = ceil(total / ITEMS_PER_PAGE)
 
         if page_num > page_count:
             page_num = page_count
@@ -124,7 +125,9 @@ def search_recipes():
         return response(200, {
             'data': recipe_list,
             'page': page_num,
-            'pageCount': page_count
+            'pageCount': page_count,
+            'perPage': ITEMS_PER_PAGE,
+            'total': total
         })
     else:
         return response(400, 'No search criteria provided.')
