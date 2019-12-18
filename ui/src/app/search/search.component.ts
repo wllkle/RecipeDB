@@ -24,7 +24,6 @@ export class SearchComponent implements OnInit {
     searchBox;
     results;
     pagination;
-    loading;
 
     ngOnInit() {
         const {criteria, page} = this.route.snapshot.params;
@@ -35,40 +34,11 @@ export class SearchComponent implements OnInit {
         }
 
         this.recipeService.search.subscribe(search => {
-            console.log(search);
             this.results = search;
             this.pagination = range(search.pageCount);
         });
 
         this.searchBox = this.formBuilder.group({criteria});
-    }
-
-    next() {
-        const {criteria} = this.route.snapshot.params;
-        let {page} = this.route.snapshot.params;
-
-        if (!page) {
-            page = 2;
-        } else {
-            if (+page < this.results.pageCount) {
-                page = +page + 1;
-            }
-        }
-
-        this.goToPage(criteria, page);
-    }
-
-    previous() {
-        const {criteria} = this.route.snapshot.params;
-        let {page} = this.route.snapshot.params;
-
-        if (+page > 2) {
-            page = +page - 1;
-        } else {
-            page = undefined;
-        }
-
-        this.goToPage(criteria, page);
     }
 
     goToPage(criteria, page) {

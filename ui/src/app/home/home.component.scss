@@ -22,11 +22,9 @@
         //margin-bottom: 2rem;
     }
 
-    > .wrap {
-        >.search-container {
-            >.search-invalid {
-                color: $white !important;
-            }
+    .wrap /deep/ {
+        .search-invalid {
+            color: $white !important;
         }
     }
 }

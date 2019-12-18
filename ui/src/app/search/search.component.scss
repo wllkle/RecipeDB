@@ -1,5 +1,48 @@
 @import '../../app';
 
+$border-radius: 0.25rem;
+$padding: 0.5rem 1rem;
+
+.pagination /deep/ {
+    pagination-controls {
+        ul.ngx-pagination {
+            margin: 0;
+            padding: 0;
+
+            li {
+                border: 1px solid $border;
+                border-left: 0;
+                margin: 0;
+
+                a {
+                    padding: $padding;
+                }
+
+                &:first-of-type {
+                    border-left: 1px solid $border;
+                    border-top-left-radius: $border-radius;
+                    border-bottom-left-radius: $border-radius;
+                }
+
+                &:last-of-type {
+                    border-top-right-radius: $border-radius;
+                    border-bottom-right-radius: $border-radius;
+                }
+
+                &.disabled {
+                    padding: $padding;
+                    cursor: not-allowed;
+                }
+
+                &.current {
+                    padding: $padding;
+                    background-color: $brand;
+                }
+            }
+        }
+    }
+}
+
 .pagination {
     display: flex;
     flex-direction: row;
