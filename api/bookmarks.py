@@ -20,7 +20,7 @@ def bookmark_recipe(_id, _user):
         'recipeId': _id
     }
     users.update_one({'_id': ObjectId(_user['_id'])}, {'$push': {'bookmarks': bookmark}})
-    return response(200, 'Bookmark added.')
+    return response(201, 'Bookmark added.')
 
 
 def unbookmark_recipe(_id, _user):
