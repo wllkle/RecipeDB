@@ -7,7 +7,7 @@ recipes = db.recipes
 
 mongo_data = []
 
-with open('../../data/full_format_recipes.json') as file:
+with open('../../../data/full_format_recipes.json') as file:
     content = json.load(file)
     di = True
     for recipe in content:
