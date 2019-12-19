@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationService} from '../notification.service';
-// @ts-ignore
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-notifications',
