@@ -2,7 +2,6 @@ from flask import request
 from pymongo import MongoClient
 from config import ITEMS_PER_PAGE, MONGO, HEADERS
 from bson import ObjectId
-from datetime import datetime
 from random import shuffle, randrange
 from bs4 import BeautifulSoup
 from requests import get
