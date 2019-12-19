@@ -54,12 +54,13 @@ def delete_recipe_comment(_id, user_id):
     result = recipes.find_one({'comments._id': ObjectId(_id)}, {'comments.$': 1, '_id': 1})
     if result is not None:
         recipe_id = str(result['_id'])
+        print(recipe_id)
         result = result['comments']
         if len(result) == 1:
             result = result[0]
             if result['user_id'] == user_id:
                 recipes.update_one({'_id': ObjectId(recipe_id)}, {'$pull': {'comments': {'_id': ObjectId(result['_id'])}}})
-                return get_recipe_comments(result['_id'])
+                return get_recipe_comments(recipe_id)
             else:
                 return response(403, 'This is not your comment to delete.')
 
