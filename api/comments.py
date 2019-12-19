@@ -1,6 +1,6 @@
 from flask import request
 from pymongo import MongoClient
-from config import ITEMS_PER_PAGE, MONGO, HEADERS
+from config import MONGO
 from bson import ObjectId
 from datetime import datetime
 
@@ -9,7 +9,6 @@ from util import response
 client = MongoClient(MONGO)
 db = client.RecipeDB
 recipes = db.recipes
-users = db.users
 
 
 def get_recipe_comments(_id):
