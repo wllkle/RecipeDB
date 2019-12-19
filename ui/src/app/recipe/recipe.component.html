@@ -129,7 +129,7 @@
                 </div>
                 <div>{{comment.body}}</div>
             </div>
-            <form class="list-group-item comment-box" *ngIf="commentUpdate !== null" [formGroup]="updateCommentBox"
+            <form class="list-group-item comment-box" *ngIf="token !== null && commentUpdate !== null" [formGroup]="updateCommentBox"
                   (ngSubmit)="updateComment()">
                 <h4 class="mb-3">Update Comment</h4>
                 <textarea formControlName="body" [value]="commentUpdateValue"></textarea>

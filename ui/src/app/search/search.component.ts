@@ -42,8 +42,7 @@ export class SearchComponent implements OnInit {
     }
 
     goToPage(criteria, page) {
-        window.scrollTo(0, 0);
-        if (page) {
+        if (page > 1) {
             this.recipeService.searchRecipes(criteria, page);
             this.router.navigate(['recipes', 'search', criteria, page]);
 
@@ -51,5 +50,6 @@ export class SearchComponent implements OnInit {
             this.recipeService.searchRecipes(criteria);
             this.router.navigate(['recipes', 'search', criteria]);
         }
+        window.scroll(0, 0);
     }
 }
