@@ -1,0 +1,12 @@
+packages that need to be installed:
+
+flask
+pymongo
+bcrypt
+datetime
+json
+bson
+bs4
+requests
+random
+math
