@@ -73,16 +73,18 @@ def register():
     password = request.form['password']
 
     if is_null(name):
-        return response(400, 'Name cannot be null')
+        return response(400, 'Name cannot be null.')
 
     if is_null(username):
-        return response(400, 'Username cannot be null')
+        return response(400, 'Username cannot be null.')
 
     if is_null(email):
-        return response(400, 'Email cannot be null')
+        return response(400, 'Email cannot be null.')
 
     if is_null(password):
-        return response(400, 'Password cannot be null')
+        return response(400, 'Password cannot be null.')
+    elif len(password) < 8:
+        return response(400, 'Password must be longer than 8 characters.')
 
     user_list = users.find({'username': username})
 
