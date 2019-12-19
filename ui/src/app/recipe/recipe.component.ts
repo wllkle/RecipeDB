@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {isEqual} from 'lodash';
+import moment from 'moment'
 
 import {AuthService, getDefaultUserObject} from '../auth/auth.service';
 import {RecipeService} from '../recipes.service';
@@ -156,5 +157,9 @@ export class RecipeComponent implements OnInit {
                 }
             }
         });
+    }
+
+    timeAgo(date){
+        return moment(date).fromNow();
     }
 }

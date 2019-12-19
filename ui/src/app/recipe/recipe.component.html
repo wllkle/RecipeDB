@@ -102,7 +102,7 @@
                 <div class="comment-header">
                     <div class="name">{{comment.user_name}}</div>
                     <div class="right">
-                        <div class="date">{{comment.date}}</div>
+                        <div class="date">{{timeAgo(comment.date)}}</div>
                         <div
                             *ngIf="token !== null && comment.user_id === userId"
                             class="btn"
