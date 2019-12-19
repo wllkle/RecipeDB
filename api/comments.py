@@ -54,7 +54,6 @@ def delete_recipe_comment(_id, user_id):
     result = recipes.find_one({'comments._id': ObjectId(_id)}, {'comments.$': 1, '_id': 1})
     if result is not None:
         recipe_id = str(result['_id'])
-        print(recipe_id)
         result = result['comments']
         if len(result) == 1:
             result = result[0]
