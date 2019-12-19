@@ -96,11 +96,11 @@ export class RecipeService {
         });
     }
 
-    deleteComment(id: string, cid: string, token: string) {
+    deleteComment(id: string, token: string) {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        return this.http.delete(`${API_URL}/recipe/${id}/comments/${cid}`, headers).toPromise().then((response) => {
+        return this.http.delete(`${API_URL}/recipe/${id}/comments`, headers).toPromise().then((response) => {
             this._comments.next(response);
             return {message: 'Your comment has been deleted successfully.'};
         }).catch(error => {

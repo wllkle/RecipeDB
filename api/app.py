@@ -139,11 +139,11 @@ def app_update_recipe_comment(_id):
     return update_recipe_comment(_id, _user)
 
 
-@app.route('/recipe/<string:_id>/comments/<string:_cid>', methods=['DELETE'])
+@app.route('/recipe/<string:_id>/comments', methods=['DELETE'])
 @jwt_required
-def app_delete_recipe_comment(_id, _cid):
+def app_delete_recipe_comment(_id):
     global _user
-    return delete_recipe_comment(_id, _cid, _user['_id'])
+    return delete_recipe_comment(_id, _user['_id'])
 
 
 @app.route('/recipe/<string:_id>/bookmark', methods=['POST'])

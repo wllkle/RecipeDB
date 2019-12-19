@@ -88,9 +88,8 @@ export class RecipeComponent implements OnInit {
         }
     }
 
-    deleteComment(cid: string) {
-        const {id} = this.route.snapshot.params;
-        this.recipeService.deleteComment(id, cid, this.token).then(res => {
+    deleteComment(id: string) {
+        this.recipeService.deleteComment(id, this.token).then(res => {
             if (res) {
                 if ((res as any).message) {
                     this.notificationService.notify('Comment deleted', (res as any).message);

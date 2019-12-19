@@ -14,9 +14,10 @@ recipes = db.recipes
 def get_recipe_comments(_id):
     result = recipes.find_one({'_id': ObjectId(_id)}, {'comments': 1, '_id': 0})
     return_data = []
-    for comment in result['comments']:
-        comment['_id'] = str(comment['_id'])
-        return_data.append(comment)
+    if result is not None:
+        for comment in result['comments']:
+            comment['_id'] = str(comment['_id'])
+            return_data.append(comment)
     return response(200, return_data)
 
 
@@ -49,15 +50,16 @@ def update_recipe_comment(_id, _user):
     return get_recipe_comments(current_comment['_id'])
 
 
-def delete_recipe_comment(_id, _cid, user_id):
-    result = recipes.find_one({'comments._id': ObjectId(_cid)}, {'comments.$': 1, '_id': 0})
+def delete_recipe_comment(_id, user_id):
+    result = recipes.find_one({'comments._id': ObjectId(_id)}, {'comments.$': 1, '_id': 1})
     if result is not None:
+        recipe_id = str(result['_id'])
         result = result['comments']
         if len(result) == 1:
             result = result[0]
             if result['user_id'] == user_id:
-                recipes.update_one({'_id': ObjectId(_id)}, {'$pull': {'comments': {'_id': ObjectId(_cid)}}})
-                return get_recipe_comments(_id)
+                recipes.update_one({'_id': ObjectId(recipe_id)}, {'$pull': {'comments': {'_id': ObjectId(result['_id'])}}})
+                return get_recipe_comments(result['_id'])
             else:
                 return response(403, 'This is not your comment to delete.')
 
