@@ -83,6 +83,19 @@ export class RecipeService {
         });
     }
 
+    updateComment(id: string, body: string, token: string) {
+        let formData = new FormData();
+        formData.append('body', body);
+
+        const headers = {
+            headers: new HttpHeaders({'x-access-token': token})
+        };
+
+        this.http.put(`${API_URL}/recipe/${id}/comments`, formData, headers).toPromise().then(response => {
+            this._comments.next(response);
+        });
+    }
+
     deleteComment(id: string, cid: string, token: string) {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
@@ -99,7 +112,7 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        return this.http.post(`${API_URL}/recipe/${id}/bookmark`, null, headers).toPromise().then(() => {
+        return this.http.put(`${API_URL}/recipe/${id}/bookmark`, null, headers).toPromise().then(() => {
             const recipe = this._data.getValue();
             if (!recipe.bookmarked) {
                 recipe.bookmarked = true;
@@ -115,7 +128,7 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        return this.http.delete(`${API_URL}/recipe/${id}/unbookmark`, headers).toPromise().then(() => {
+        return this.http.delete(`${API_URL}/recipe/${id}/bookmark`, headers).toPromise().then(() => {
             const recipe = this._data.getValue();
             if (recipe.bookmarked) {
                 recipe.bookmarked = false;

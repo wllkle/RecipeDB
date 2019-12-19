@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {isEqual} from 'lodash';
 
 import {AuthService, getDefaultUserObject} from '../auth/auth.service';
@@ -27,15 +27,21 @@ export class RecipeComponent implements OnInit {
     recipe: any = null;
     comments: [] = null;
     commentBox;
+    updateCommentBox;
     token: string = null;
     userId: string = null;
     admin: boolean = false;
+    commentUpdate: string = null;
+    commentUpdateValue: string = null;
 
     ngOnInit() {
         const {id} = this.route.snapshot.params;
 
         this.commentBox = this.formBuilder.group({
             body: ''
+        });
+        this.updateCommentBox = this.formBuilder.group({
+            body: ['', Validators.required]
         });
 
         this.authService.user.subscribe(user => {
@@ -71,6 +77,15 @@ export class RecipeComponent implements OnInit {
         this.commentBox = this.formBuilder.group({
             body: ''
         });
+    }
+
+    updateComment() {
+        if (this.updateCommentBox.valid) {
+            const {body} = this.updateCommentBox.value;
+            this.recipeService.updateComment(this.commentUpdate, body, this.token);
+            this.commentUpdate = null;
+            this.commentUpdateValue = null;
+        }
     }
 
     deleteComment(cid: string) {

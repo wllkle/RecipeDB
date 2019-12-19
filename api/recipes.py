@@ -71,6 +71,23 @@ def new_recipe_comment(_id, user):
     return get_recipe_comments(_id)
 
 
+def update_recipe_comment(_id, _user):
+    try:
+        current_comment = recipes.find_one({'comments._id': ObjectId(_id)}, {'_id': 1, 'comments.$': 1})
+        if _user['_id'] != current_comment['comments'][0]['user_id']:
+            return response(400, 'This is not your comment to update.')
+    except:
+        return response(400, 'No comment found.')
+
+    updated_comment = {
+        'comments.$.user_id': current_comment['comments'][0]['user_id'],
+        'comments.$.body': request.form['body'],
+        'comments.$.date': datetime.utcnow()
+    }
+    recipes.update_one({'comments._id': ObjectId(_id)}, {'$set': updated_comment})
+    return get_recipe_comments(current_comment['_id'])
+
+
 def delete_recipe_comment(_id, _cid, user_id):
     result = recipes.find_one({'comments._id': ObjectId(_cid)}, {'comments.$': 1, '_id': 0})
     if result is not None:
