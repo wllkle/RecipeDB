@@ -20,6 +20,6 @@
     font-family: -apple-system, BlinkMacSystemFont, 'SFPro', 'Segoe UI', serif;
 }
 
-h1, h2 {
+h1, h2, h4 {
     font-weight: bold !important;
 }

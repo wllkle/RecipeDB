@@ -112,7 +112,7 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        return this.http.put(`${API_URL}/recipe/${id}/bookmark`, null, headers).toPromise().then(() => {
+        return this.http.post(`${API_URL}/recipe/${id}/bookmark`, null, headers).toPromise().then(() => {
             const recipe = this._data.getValue();
             if (!recipe.bookmarked) {
                 recipe.bookmarked = true;
@@ -163,7 +163,7 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.get(`${API_URL}/me/bookmarks`, headers).toPromise().then(response => {
+        this.http.get(`${API_URL}/bookmarks`, headers).toPromise().then(response => {
             if (!isEqual(response, this._bookmarks.getValue())) {
                 this._bookmarks.next(response);
             }
@@ -177,7 +177,7 @@ export class RecipeService {
         const headers = {
             headers: new HttpHeaders({'x-access-token': token})
         };
-        this.http.post(`${API_URL}/scrapebbc`, formData, headers).toPromise().then(response => {
+        this.http.post(`${API_URL}/recipes`, formData, headers).toPromise().then(response => {
             if (response.hasOwnProperty('inserted')) {
                 navigate(response['inserted']);
             }

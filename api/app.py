@@ -151,7 +151,7 @@ def delete_comment(_id, _cid):
     return delete_recipe_comment(_id, _cid, _user['_id'])
 
 
-@app.route('/recipe/<string:_id>/bookmark', methods=['PUT'])
+@app.route('/recipe/<string:_id>/bookmark', methods=['POST'])
 @jwt_required
 def app_bookmark_recipe(_id):
     global _user
@@ -165,14 +165,14 @@ def app_unbookmark_recipe(_id):
     return unbookmark_recipe(_id, _user)
 
 
-@app.route('/me/bookmarks', methods=['GET'])
+@app.route('/bookmarks', methods=['GET'])
 @jwt_required
 def app_get_bookmarks():
     global _user
     return get_bookmarks(_user['_id'])
 
 
-@app.route('/scrapebbc', methods=['POST'])
+@app.route('/recipes', methods=['POST'])
 @admin_required
 def app_scrape_bbc():
     return scrape_bbc()
