@@ -192,97 +192,6 @@ platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.error(err));
 
 
-
-C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\polyfills.ts
-
-/**
- * This file includes polyfills needed by Angular and is loaded before the app.
- * You can add your own extra polyfills to this file.
- *
- * This file is divided into 2 sections:
- *   1. Browser polyfills. These are applied before loading ZoneJS and are sorted by browsers.
- *   2. Application imports. Files imported after ZoneJS that should be loaded before your main
- *      file.
- *
- * The current setup is for so-called "evergreen" browsers; the last versions of browsers that
- * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),
- * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.
- *
- * Learn more in https://angular.io/guide/browser-support
- */
-
-/***************************************************************************************************
- * BROWSER POLYFILLS
- */
-
-/** IE10 and IE11 requires the following for NgClass support on SVG elements */
-// import 'classlist.js';  // Run `npm install --save classlist.js`.
-
-/**
- * Web Animations `@angular/platform-browser/animations`
- * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
- * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
- */
-// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
-
-/**
- * By default, zone.js will patch all possible macroTask and DomEvents
- * user can disable parts of macroTask/DomEvents patch by setting following flags
- * because those flags need to be set before `zone.js` being loaded, and webpack
- * will put import in the top of bundle, so user need to create a separate file
- * in this directory (for example: zone-flags.ts), and put the following flags
- * into that file, and then add the following code before importing zone.js.
- * import './zone-flags.ts';
- *
- * The flags allowed in zone-flags.ts are listed here.
- *
- * The following flags will work for all browsers.
- *
- * (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
- * (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick
- * (window as any).__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames
- *
- *  in IE/Edge developer tools, the addEventListener will also be wrapped by zone.js
- *  with the following flag, it will bypass `zone.js` patch for IE/Edge
- *
- *  (window as any).__Zone_enable_cross_context_check = true;
- *
- */
-
-/***************************************************************************************************
- * Zone JS is required by default for Angular itself.
- */
-import 'zone.js/dist/zone'; // Included with Angular CLI.
-
-
-/***************************************************************************************************
- * APPLICATION IMPORTS
- */
-
-
-
-C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\test.ts
-
-// This file is required by karma.conf.js and loads recursively all the .spec and framework files
-
-import 'zone.js/dist/zone-testing';
-import {getTestBed} from '@angular/core/testing';
-import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
-
-declare const require: any;
-
-// First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(
-    BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting()
-);
-// Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
-// And load the modules.
-context.keys().map(context);
-
-
-
 C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\app\app.component.html
 
 <div class="app">
@@ -2076,14 +1985,6 @@ C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\app\search\search.component.html
         </div>
     </div>
     <div class="pagination" *ngIf="results.data && results.data.length > 0">
-        <!--        <div class="page-item" [ngClass]="{'disabled': results.page === 1}">-->
-        <!--            <div class="page-link" (click)="previous()">-->
-        <!--                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">-->
-        <!--                    <path-->
-        <!--                        d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"/>-->
-        <!--                </svg>-->
-        <!--            </div>-->
-        <!--        </div>-->
         <pagination-controls (pageChange)="goToPage(route.snapshot.params.criteria, $event)"
                              class="pagination"></pagination-controls>
         <div>
@@ -2095,14 +1996,6 @@ C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\app\search\search.component.html
 
             </div>
         </div>
-        <!--        <div class="page-item" [ngClass]="{'disabled': results.page === results.pageCount}">-->
-        <!--            <div class="page-link" (click)="next()">-->
-        <!--                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">-->
-        <!--                    <path-->
-        <!--                        d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"/>-->
-        <!--                </svg>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </div>
 
@@ -2419,33 +2312,6 @@ export class BarComponent implements OnInit {
 }
 
 
-
-C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\environments\environment.prod.ts
-
-export const environment = {
-    production: true
-};
-
-
-
-C:\Users\rob\Documents\GitHub\RecipeDB\ui\src\environments\environment.ts
-
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
-export const environment = {
-    production: false
-};
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
 
 
