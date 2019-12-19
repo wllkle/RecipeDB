@@ -34,6 +34,7 @@ def get_recipe(_id, _user):
         return response(404, 'No recipe found')
 
 
+# unused endpoint
 def get_recipes():
     page_num = 1
     if request.args.get('p'):
@@ -48,59 +49,6 @@ def get_recipes():
         recipe['desc'] = trim(recipe['desc'], 160)
         recipe_list.append(recipe)
     return response(200, recipe_list)
-
-
-def get_recipe_comments(_id):
-    result = recipes.find_one({'_id': ObjectId(_id)}, {'comments': 1, '_id': 0})
-    return_data = []
-    for comment in result['comments']:
-        comment['_id'] = str(comment['_id'])
-        return_data.append(comment)
-    return response(200, return_data)
-
-
-def new_recipe_comment(_id, user):
-    comment = {
-        '_id': ObjectId(),
-        'user_id': user['_id'],
-        'user_name': user['username'],
-        'body': request.form['body'],
-        'date': datetime.utcnow()
-    }
-    recipes.update_one({'_id': ObjectId(_id)}, {'$push': {'comments': comment}})
-    return get_recipe_comments(_id)
-
-
-def update_recipe_comment(_id, _user):
-    try:
-        current_comment = recipes.find_one({'comments._id': ObjectId(_id)}, {'_id': 1, 'comments.$': 1})
-        if _user['_id'] != current_comment['comments'][0]['user_id']:
-            return response(400, 'This is not your comment to update.')
-    except:
-        return response(400, 'No comment found.')
-
-    updated_comment = {
-        'comments.$.user_id': current_comment['comments'][0]['user_id'],
-        'comments.$.body': request.form['body'],
-        'comments.$.date': datetime.utcnow()
-    }
-    recipes.update_one({'comments._id': ObjectId(_id)}, {'$set': updated_comment})
-    return get_recipe_comments(current_comment['_id'])
-
-
-def delete_recipe_comment(_id, _cid, user_id):
-    result = recipes.find_one({'comments._id': ObjectId(_cid)}, {'comments.$': 1, '_id': 0})
-    if result is not None:
-        result = result['comments']
-        if len(result) == 1:
-            result = result[0]
-            if result['user_id'] == user_id:
-                recipes.update_one({'_id': ObjectId(_id)}, {'$pull': {'comments': {'_id': ObjectId(_cid)}}})
-                return get_recipe_comments(_id)
-            else:
-                return response(403, 'This is not your comment to delete.')
-
-    return response(404, 'No item found')
 
 
 def get_top_recipes():
@@ -150,54 +98,7 @@ def search_recipes():
         return response(400, 'No search criteria provided.')
 
 
-def bookmark_recipe(_id, _user):
-    user = users.find_one({'_id': ObjectId(_user['_id'])}, {'bookmarks': 1})
-    for bookmark in user['bookmarks']:
-        if bookmark['recipeId'] == _id:
-            return response(202, 'This recipe is already in your bookmarks.')
-    bookmark = {
-        '_id': ObjectId(),
-        'recipeId': _id
-    }
-    users.update_one({'_id': ObjectId(_user['_id'])}, {'$push': {'bookmarks': bookmark}})
-    return response(200, 'Bookmark added.')
-
-
-def unbookmark_recipe(_id, _user):
-    user = users.find_one({'_id': ObjectId(_user['_id'])}, {'bookmarks': 1})
-    i = 0
-    removed = False
-    while i < len(user['bookmarks']):
-        bookmark = user['bookmarks'][i]
-        if str(bookmark['recipeId']) == _id:
-            users.update_one({'_id': ObjectId(_user['_id'])}, {'$pull': {'bookmarks': {'_id': bookmark['_id']}}})
-            removed = True
-
-        if i + 1 == len(user['bookmarks']):
-            if removed:
-                return response(200, 'Bookmark removed.')
-            else:
-                return response(202, 'Not bookmarked.')
-        i += 1
-    return response(202, 'Recipe not bookmarked.')
-
-
-def get_bookmarks(_id):
-    result = users.find_one({'_id': ObjectId(_id)}, {'bookmarks': 1})
-    bookmark_list = []
-    for bookmark in result['bookmarks']:
-        r = recipes.find_one({'_id': ObjectId(bookmark['recipeId'])},
-                             {'title': 1, 'desc': 1, 'rating': 1, 'calories': 1})
-        if r is not None:
-            r['_id'] = str(r['_id'])
-            r['desc'] = trim(r['desc'], 160)
-            bookmark_list.append(r)
-        else:
-            users.update_one({'_id': ObjectId(_id)}, {'$pull': {'bookmarks': {'_id': bookmark['_id']}}})
-    return response(200, bookmark_list)
-
-
-def scrape_bbc():
+def new_recipe():
     url = request.form['url']
     if 'bbcgoodfood.com' not in url:
         return response(400, 'Not a BBC link.')

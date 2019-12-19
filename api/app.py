@@ -7,9 +7,9 @@ from pymongo import MongoClient, TEXT
 
 from util import response
 from auth import login, logout, register
-from recipes import get_recipe, get_recipe_comments, new_recipe_comment, delete_recipe_comment, \
-    get_top_recipes, search_recipes, bookmark_recipe, unbookmark_recipe, get_bookmarks, scrape_bbc, delete_recipe, \
-    update_recipe_comment
+from recipes import get_recipe, search_recipes, new_recipe, delete_recipe, get_top_recipes
+from comments import get_recipe_comments, new_recipe_comment, update_recipe_comment, delete_recipe_comment
+from bookmarks import get_bookmarks, bookmark_recipe, unbookmark_recipe
 
 app = Flask('RecipeDB')
 CORS(app)
@@ -97,13 +97,8 @@ def app_register():
     return register()
 
 
-# @app.route('/recipes', methods=['GET'])
-# def recipes():
-#     return get_recipes()
-
-
 @app.route('/recipes/top', methods=['GET'])
-def top_recipes():
+def app_get_top_recipes():
     return get_top_recipes()
 
 
@@ -114,7 +109,7 @@ def app_search_recipes():
 
 @app.route('/recipe/<string:_id>', methods=['GET'])
 @jwt_optional
-def recipe(_id):
+def app_get_recipe(_id):
     global _user
     return get_recipe(_id, _user)
 
@@ -126,27 +121,27 @@ def app_delete_recipe(_id):
 
 
 @app.route('/recipe/<string:_id>/comments', methods=['GET'])
-def recipe_comments(_id):
+def app_get_recipe_comments(_id):
     return get_recipe_comments(_id)
 
 
 @app.route('/recipe/<string:_id>/comments', methods=['POST'])
 @jwt_required
-def new_comment(_id):
+def app_new_recipe_comment(_id):
     global _user
     return new_recipe_comment(_id, _user)
 
 
 @app.route('/recipe/<string:_id>/comments', methods=['PUT'])
 @jwt_required
-def app_update_comment(_id):
+def app_update_recipe_comment(_id):
     global _user
     return update_recipe_comment(_id, _user)
 
 
 @app.route('/recipe/<string:_id>/comments/<string:_cid>', methods=['DELETE'])
 @jwt_required
-def delete_comment(_id, _cid):
+def app_delete_recipe_comment(_id, _cid):
     global _user
     return delete_recipe_comment(_id, _cid, _user['_id'])
 
@@ -174,8 +169,8 @@ def app_get_bookmarks():
 
 @app.route('/recipes', methods=['POST'])
 @admin_required
-def app_scrape_bbc():
-    return scrape_bbc()
+def app_new_recipe():
+    return new_recipe()
 
 
 if __name__ == '__main__':
