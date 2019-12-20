@@ -4,6 +4,7 @@ from functools import wraps
 from config import SECRET_KEY, MONGO, MONGO_INDEXES
 from jwt import decode
 from pymongo import MongoClient, TEXT
+from datetime import datetime
 
 from util import response
 from auth import login, logout, register
@@ -33,7 +34,7 @@ def jwt_required(func):
             token = request.headers['x-access-token']
 
         if not token:
-            return response(401, 'Token is missing')
+            return response(401, 'Token is missing.')
 
         try:
             _user = decode(token, SECRET_KEY)

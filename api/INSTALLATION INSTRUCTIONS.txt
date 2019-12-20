@@ -10,3 +10,8 @@ bs4
 requests
 random
 math
+
+
+to import data, go to /util/data from here and run
+python importData.py
+python createUsers.py
