@@ -23,7 +23,7 @@
             <li class="nav-item dropdown" *ngIf="user['token'] !== null"
                 (clickOutside)="dropdownCollapsed === false ? dropdownCollapsed = true : null">
                 <a class="nav-link dropdown-toggle" role="button" (click)="dropdownCollapsed = !dropdownCollapsed">
-                    {{user['username']}}
+                    @{{user['username']}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" [ngClass]="dropdownCollapsed ? '' : 'show'">
                     <a class="dropdown-item" [routerLink]="'bookmarks'"

@@ -100,7 +100,7 @@
             </div>
             <div *ngFor="let comment of comments" class="list-group-item comment">
                 <div class="comment-header">
-                    <div class="name">{{comment.user_name}}</div>
+                    <div class="name">@{{comment.user_name}}</div>
                     <div class="right">
                         <div class="date">{{timeAgo(comment.date)}}</div>
                         <div
