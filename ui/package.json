@@ -23,7 +23,7 @@
         "@ng-bootstrap/ng-bootstrap": "^5.1.4",
         "bootstrap": "^4.4.1",
         "jquery": "^3.4.1",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.21",
         "moment": "^2.24.0",
         "ng-bootstrap": "^1.6.3",
         "ng-click-outside": "^5.1.1",
